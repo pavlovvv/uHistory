@@ -1,0 +1,9 @@
+{
+    "language": "Language",
+    "filled": "Field must be filled",
+    "min": "Minimum {{count}} characters",
+    "max": "Maximum {{count}} characters",
+    "invalid_email": "Invalid email",
+    "invalid_name": "Invalid name",
+    "invalid_password": "Invalid password"
+}

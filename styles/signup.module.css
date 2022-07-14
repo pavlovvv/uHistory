@@ -1,0 +1,230 @@
+.signup {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    column-gap: 450px;
+    row-gap: 150px;
+    overflow: hidden;
+}
+
+.signup__signupPanel{
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-end;
+}
+
+.container{
+    padding: 44px 210px;
+    min-height: 86vh;
+    margin: 29px 20px;
+    backdrop-filter: blur(80px);
+    -webkit-backdrop-filter: blur(80px);
+    border-radius: 10px;
+    background-color: rgba(255, 255, 255, 0.069)
+}
+
+@supports ((-webkit-backdrop-filter: none) or (backdrop-filter: none)) {
+
+    .container{
+        backdrop-filter: blur(80px);
+        -webkit-backdrop-filter: blur(80px);
+    }
+
+}
+
+@supports not ((-webkit-backdrop-filter: none) or (backdrop-filter: none)) {
+    
+    .container{
+        background-color: rgba(188, 217, 255, 0.11)
+    }
+
+}
+
+
+.signupPanel__inner {
+    min-width: 430px;
+}
+
+.signupPanel__title {
+    font-size: 45px;
+    text-align: center;
+    color:#bcd9ff;
+    font-family: 'Candara';
+    text-transform: uppercase;
+    text-decoration-line: underline;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 5px;
+    font-weight: 300;
+}
+
+.signup__signupChar {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-right: 350px;
+    width: 600px;
+    height: 600px;
+}
+
+.signup__form {
+    margin-top: 50px;
+}
+
+.signup__formSection {
+    margin-top: 20px;
+}
+
+.signup__formLabel {
+    color: #fff;
+    text-transform: uppercase;
+    font-family: 'Candara';
+    font-size: 25px;
+    display: flex;
+    margin-bottom: 10px;
+    align-items: center;
+    column-gap: 10px;
+    font-weight: 300;
+}
+
+.signup__rules {
+    line-height: 35px;
+    margin-top: 10px;
+}
+
+.signup__rule {
+    color: #fff;
+    font-family: 'Candara';
+    font-size: 18px;
+    text-transform: uppercase;
+    font-weight: 300;
+}
+
+.signup__ruleBold {
+    font-weight: 900;
+}
+
+.signup__formSubmit {
+    margin-top: 30px;
+    color: #bcd9ff;
+    text-transform: uppercase;
+    font-size: 20px;
+    padding: 5px 35px;
+    border-radius: 10px;
+    border: 1px #bcd9ff solid;
+    cursor: pointer;
+    transition: 0.3s;
+    -webkit-transition: 0.3s;
+    display: flex;
+    align-items: center;
+}
+
+.signup__formSubmit:disabled {
+    border: 1px #73777B solid;
+    color: #73777B
+}
+
+.signup__formSubmit:hover {
+    background-color: rgba(188, 217, 255, 0.1)
+}
+
+.signup__newAcc {
+    color: #fff;
+    margin-top: 30px;
+    font-family: 'Candara';
+    font-size: 18px;
+    text-transform: uppercase;
+    font-weight: 300;
+}
+
+.signup__newAccSpan {
+    color:#bcd9ff;
+    font-family: 'Candara';
+    text-transform: uppercase;
+    text-decoration-line: underline;
+    text-decoration-thickness: 1%;
+    text-underline-offset: 3px;
+    cursor: pointer;
+}
+
+.signup__signupCharFrame {
+    position: absolute;
+    top: 25%;
+}
+
+@media(max-width: 1600px) {
+    .signup {
+        column-gap: 200px;
+    }
+
+    .container{
+        padding: 44px 80px;
+    }
+}
+
+@media(max-width: 1100px) {
+    .signup {
+        flex-direction: column;
+    }
+
+    .signup__signupCharFrame {
+        top: -80px;
+    }
+
+    .signup__signupChar {
+        width: 100%;
+        padding-right: 0;
+    }
+
+    .signup__signupPanel{
+        width: 100%;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .container{
+        padding: 100px 80px;
+        min-height: auto;
+    }
+
+    .signupPanel__inner {
+        min-width: auto;
+        width: 60vw;
+    }
+}
+
+@media (max-width: 500px) {
+    .signup {
+        row-gap: 0px;
+        max-height: 1230px;
+    }
+
+    .signupPanel__inner {
+        width: 80vw;
+    }
+
+    .container {
+        padding: 50px 25px;
+        
+    }
+
+    .signupPanel__title {
+        font-size: 35px;
+    }
+
+    .signup__formLabel {
+        font-size: 17px;
+        margin-bottom: 6px;
+    }
+
+    .signup__newAcc {
+        font-size: 15px;
+    }
+
+    .signup__rule {
+        font-size: 14px;
+    }
+
+    .signup__formSubmit {
+        margin-top: 10px;
+    }
+}

@@ -1,0 +1,15 @@
+{
+    "registration": "Registration",
+    "your_name": "Your name",
+    "your_email": "Your email",
+    "your_password": "Your password",
+    "rule1": "at least ",
+    "rule1.1": "8 characters",
+    "rule2": "uppercase and lowercase letters",
+    "rule3": "a mixture of letters and numbers",
+    "rule4": "inclusion of at least ",
+    "rule4.1": "one special character",
+    "submit": "Submit",
+    "already": "Already registered? So just ",
+    "login": "Login"
+}
