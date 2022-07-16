@@ -1,0 +1,90 @@
+.main {
+    display: flex;
+    flex-direction: row;
+    min-height: 100vh;
+    max-width: 100vw;
+    background-image: url('../public/images/bgMain.png');
+    background-repeat: no-repeat;
+    background-size: cover;
+    font-family: 'Candara';
+    color: #fff;
+    justify-content: flex-end;
+    overflow: hidden;
+}
+
+.right {
+    background-color: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
+    overflow: hidden;
+    min-width: 40px;
+}
+
+.right__icon {
+    height: 10vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    padding: 0 10px;
+}
+
+.right__navItem {
+    width: 100%;
+    padding: 0 10px;
+}
+
+
+.right__navItemInner::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    width: 150px;
+    right: -30px; 
+    height: 1px;
+    background-color: rgb(128,128,128, 0.3);
+}
+
+@media (max-width: 500px) {
+
+    .right__icon, .right__navItem {
+        padding: 0 3px;
+    }
+
+}
+
+.right__nav {
+    height: 90vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.right__navItem {
+    height: 18vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    cursor: pointer;
+}
+
+.preloader{
+    width: 100%;
+    height: 100vh;
+    background-image: url('../public/images/bgMain.png');
+    background-repeat: no-repeat;
+    background-size:cover;
+     overflow: hidden;
+}
+
+.preloaderitem {
+    display: block;
+    position: relative;
+    top: 30%;
+}
+
+.none {
+    display: none;
+}

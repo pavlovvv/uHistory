@@ -1,4 +1,6 @@
-FROM public.ecr.aws/bitnami/node:16
+#public.ecr.aws/bitnami/node:16
+FROM node:16
+
 WORKDIR /app
 
 COPY package.json yarn.lock ./

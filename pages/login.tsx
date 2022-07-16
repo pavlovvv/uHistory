@@ -66,7 +66,7 @@ const Login: React.FC = () => {
 
   useEffect(() => {
     if (isAuthFulfilled && isAuthed) {
-      router.push('/welcome2')
+      router.push('/main')
     }
   }, [isAuthFulfilled, isAuthed]);
 

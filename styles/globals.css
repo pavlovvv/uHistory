@@ -67,6 +67,11 @@ svg {
   height: auto;
 }
 
+a, a:active {
+  text-decoration: none;
+  color: inherit;
+}
+
 /* Form */
 
 input,
@@ -130,4 +135,9 @@ html::-webkit-scrollbar-thumb {
 
 html::-webkit-scrollbar-track {
 	background-color: #555;
+}
+
+@font-face {
+  font-family: 'Candara';
+  src: url('../public/fonts/candara-light.ttf');
 }

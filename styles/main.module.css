@@ -1,304 +1,258 @@
-@font-face {
-    font-family: 'Lack';
-    src: url('../public/fonts/lack-regular.otf');
-}
-
-.main {
-    display: flex;
-    flex-direction: column;
-    min-height: 100vh;
-    background-image: url('../public/images/bgMain.png');
-    background-repeat: no-repeat;
-    background-size:cover;
+.left {
+    width: 96vw;
     font-family: 'Candara';
+    font-weight: 300;
+    text-transform: uppercase;
 }
 
 .container {
-    padding: 0 25px;
+    margin: 30px 60px;
 }
 
-.main__header {
-    padding: 15px 25px;
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-    background-color: rgba(255, 255, 255, 0.05)
+.left__title {
+    font-size: 45px;
 }
 
-
-.main__headerRight {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    column-gap: 20px;
-}
-
-.main__headerRightLink {
-    color: #bcd9ff;
-    text-transform: uppercase;
-    font-size: 20px;
-    padding: 5px 15px;
-    border-radius: 10px;
-    border: 1px #bcd9ff solid;
-    cursor: pointer;
-    transition: 0.3s;
-}
-
-.main__headerRightLink:hover {
-    background-color: rgba(188, 217, 255, 0.1)
-}
-
-.main__headerLanguage {
-    padding: 0;
-    width: 40px;
-    height: 40px;
-    cursor: pointer;
+.left__category {
+    margin-top: 50px;
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    background-color: rgb(255,255,255, 0.05);
     border: 1px #fff solid;
-    border-radius: 12px;
+    border-radius: 15px;
 }
 
-@media(max-width: 500px) {
-    .main__headerRightLink {
-        font-size: 14px;
-        padding: 5px 7px;
-        border-radius: 5px;
-    }
-
-    .main__headerLanguage {
-        width: 25px;
-        height: 25px;
-        border-radius: 7px;
-    }
-
-    .main__headerRight {
-        column-gap: 10px;
-    }
+.left__categoryTitle {
+    font-size: 40px;
 }
 
-
-.main__main {
+.categoryContainer {
+    padding: 25px 60px;
     display: flex;
-    flex-direction: column;
-    min-height: 90vh;
-}
-
-.main__mainTop {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-}
-
-.main__mainSectionRight {
-    margin-top: 70px;
-    position: relative;
-    width: 883px;
-    height: 704px
-}
-
-.sectionRight__char {
-    position: absolute;
-}
-
-.main__mainSectionLeft {
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-end;
-    text-transform: uppercase;
-    margin-bottom: 35px;
-}
-
-.sectionLeftText {
-    color: #fff;
-    font-size: 100px;
-    font-weight: 300;
-    letter-spacing: 5px;
-    word-break: keep-all;
-}
-
-.outlinedText {
-    color: unset;
-    -webkit-text-stroke: 0.5px #fff;
-}
-
-.sectionLeft__email {
-    color: #fff;
-    text-transform: uppercase;
-    font-size: 20px;
-    padding: 7px 13px;
-    border-radius: 8px;
-    border: 1px #bcd9ff solid;
-    cursor: pointer;
-    transition: 0.3s;
-    -webkit-transition: 0.3s;
-    -webkit-transition: 0.3s;
-}
-
-.sectionLeft__email:hover {
-    background-color: rgba(188, 217, 255, 0.1)
-}
-
-.main__mainBottom {
-    display: flex;
-    flex-grow: 1;
-    align-items: flex-end;
-    justify-content: space-between;
-}
-
-.main__mainBottomLinks {
-    display: flex;
-    flex-direction: row;
-    column-gap: 20px;
-}
-
-.iconOnHover {
-    transition: 0.2s;
-    -webkit-transition: 0.2s;
-    color: #bcd9ff;
-    cursor: pointer;
-}
-
-.iconOnHover:hover {  
-    color: #fff;
-}
-
-.main__mainBottomTelegramIcon {
-    width: 29px;
-    height: 25px;
-    background-image: url('../public/images/telegram_icon1.png');
-    transition: 0.2s;
-    -webkit-transition: 0.2s;
-}
-
-.main__mainBottomTelegramIcon:hover {
-    background-image: url('../public/images/telegram_icon2.png');
-}
-
-.main__mainBottomDiscordIcon {
-    width: 34px;
-    height: 26px;
-    background-image: url('../public/images/discord_icon1.png');
-    transition: 0.2s;
-    -webkit-transition: 0.2s;
-}
-
-.main__mainBottomDiscordIcon:hover {
-    background-image: url('../public/images/discord_icon2.png');
-}
-
-.main__mainBottomTwitterIcon {
-    width: 30px;
-    height: 26px;
-    background-image: url('../public/images/twitter_icon1.png');
-    transition: 0.2s;
-    -webkit-transition: 0.2s;
-}
-
-.main__mainBottomTwitterIcon:hover {
-    background-image: url('../public/images/twitter_icon2.png');
-}
-
-.main__mainBottomText {
-    font-family: 'Lack';
-    color: transparent;
-    font-size: 15px;
-    text-transform: uppercase;
-    -webkit-text-stroke: 0.5px #fff;
-}
-
-.main__mainSectionLeftAuth{
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    column-gap: 30px;
-    row-gap: 20px;
-}
-
-.main__mainBottom{
-    margin-top: -30px;
     align-items: center;
+    justify-content: space-between;
 }
 
-@media(max-width: 1200px) {
-    .main__mainTop{
-        flex-direction: column;
+.left__categoryItems {
+    border-top: 1px #fff solid;
+    position: relative;
+}
+
+.categoryItemsContainer {
+    padding: 35px 110px;
+    display: flex;
+    justify-content: space-around;
+}
+
+.left__categoryItem {
+    width: 220px;
+    height: 220px;
+    background-size: cover;
+    background-repeat: no-repeat;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    border: 1px #fff solid;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+.left__categoryItemName {
+    font-size: 22px;
+    padding: 10px;
+    backdrop-filter: blur(100px);
+    -webkit-backdrop-filter: blur(100px);
+    background-color: rgb( 0, 0, 0, 0.4);
+    border-radius: 10px 10px 0 0;
+    border-bottom: 1px #fff solid;
+}
+
+.left__categoryItemFooter {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    padding: 10px;
+    backdrop-filter: blur(100px);
+    -webkit-backdrop-filter: blur(100px);
+    background-color: rgb( 0, 0, 0, 0.4);
+    border-radius: 0 0 10px 10px;
+    border-top: 1px #fff solid;
+}
+
+.left__categoryItemFooterRarity {
+    padding: 1px 25px;
+    border-radius: 8px;
+    border: 1px #fff solid;
+    font-size: 19px;
+}
+
+.left__categoryItemFooterCost {
+    display: flex;
+    flex-direction: row;
+    column-gap: 5px;
+    padding: 3px 8px;
+    color: #bcd9ff;
+    border: 1px #bcd9ff solid;
+    border-radius: 8px;
+    font-size: 14px;
+}
+
+.left__categoryItemsButtonRight, .left__categoryItemsButtonLeft {
+    position: absolute;
+    color: #fff;
+    font-size: 20px;
+    top: 50%;
+    transform: translate(-50%,-50%);
+    padding: 5px 10px;
+    border: 1px #fff solid;
+    border-radius: 10px;
+    background-color: rgb( 41, 41, 41, 0.5);
+    z-index: 1;
+}
+
+.left__categoryItemsButtonRight {
+    right: 0;
+}
+
+.left__categoryItemsButtonLeft {
+    left: 60px; 
+}
+
+.left__categoryItemsButtonRight:disabled, .left__categoryItemsButtonLeft:disabled {
+    border: 1px rgb(41, 41, 41) solid;
+    color: rgb(41, 41, 41);
+}
+
+@media (max-width: 1100px) {
+    .container {
+        margin: 30px;
     }
 
-    .sectionLeftText {
-        font-size: 65px;
+    .left__categoryItem {
+        width: 150px;
+        height: 150px;
     }
 
-    .main__mainSectionLeft {
-        margin-top: 30px;
+    .categoryItemsContainer {
+        padding: 35px 90px;
     }
 
-    .main__mainSectionRight {
-        margin-top: 0;
-        text-align: center;
-        width: auto;
-        height: auto
+    .left__categoryItemName {
+        font-size: 17px;
+        padding: 5px 9px;
     }
 
-    .main__mainBottom{
-        margin-top: 30px;
-        margin-bottom: 20px;
+    .left__categoryItemFooter {
+        padding: 3px;
+        border-radius: 0 0 10px 10px;
     }
     
-    .sectionRight__char {
-        position: relative;
+    .left__categoryItemFooterRarity {
+        padding: 2px 13px;
+        border-radius: 8px;
+        font-size: 16px;
+    }
+    
+    .left__categoryItemFooterCost {
+        column-gap: 5px;
+        padding: 2px 5px;
     }
 }
 
-@media(max-width: 500px) {
-    .sectionLeftText {
-        font-size: 45px;
+@media (max-width: 800px) {
+    .container {
+        margin: 30px 15px;
     }
 
-    .main__mainBottom {
-        flex-direction: column;
-        align-items: center;
-        row-gap: 30px;
+    .left__categoryItemsButtonRight {
+        right: -17px;
     }
+    
+    .left__categoryItemsButtonLeft {
+        left: 35px; 
+    }
+}
 
-    .sectionLeft__email {
-        font-size: 15px;
-        padding: 5px 10px;
-        border-radius: 5px;
-    }
+@media (max-width: 700px) {
 
     .container {
-        padding: 0 15px;
+        margin-left: 35px;
     }
 
-    .sectionRight__char {
-        animation: mymove 2s linear infinite;
-    }
-
-    @keyframes mymove {
-        0%, 100% {
-            bottom: 0;
-          }
-          50% {
-            bottom: 6px;
-          }
+    .categoryItemsContainer {
+        padding: 35px 50px;
     }
 }
 
-.preloader{
-    width: 100%;
-    height: 100vh;
-    background-image: url('../public/images/bgMain.png');
-    background-repeat: no-repeat;
-    background-size:cover;
-     overflow: hidden;
-  }
-  
-  .preloaderitem {
-    display: block;
-    position: relative;
-    top: 30%;
-  }
-  
-  .none {
-    display: none;
-  }
+@media (max-width: 550px) {
+    .container {
+        margin: 30px 10px;
+
+    }
+
+    .categoryItemsContainer {
+        padding: 60px 0;
+        padding-bottom: 80px;
+    }
+
+    .left__categoryItemsButtonRight {
+        padding: 1px 5px;
+        top: unset;
+        bottom: -10px;
+        right: 25%;
+        border: none;
+        background: transparent;
+    }
+
+    .left__categoryItemsButtonLeft {
+        padding: 1px 5px;
+        top: unset;
+        bottom: -10px;
+        left: 36%;
+        border: none;
+        background: transparent;
+    }
+
+    .left__categoryItemsButtonRight:disabled, .left__categoryItemsButtonLeft:disabled {
+        border: none;
+        color: grey
+    }
+
+    .left__categoryItem {
+        width: 144px;
+        height: 144px;
+        margin-top: -15px;
+    }
+
+    .left {
+        width: 90vw;
+    }
+
+    .left__categoryItemFooterRarity {
+        padding: 2px 9px;
+        font-size: 14px;
+    }
+    
+    .left__categoryItemFooterCost {
+        column-gap: 3px;
+        padding: 3px 4px;
+        font-size: 14px;
+    }
+
+    .left__categoryTitle {
+        font-size: 29px;
+    }
+    
+    .categoryContainer {
+        padding: 25px 30px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+
+    .left__title {
+        font-size: 35px;
+        text-align: center;
+    } 
+
+}

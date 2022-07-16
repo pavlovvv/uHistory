@@ -175,7 +175,7 @@
 @media (max-width: 500px) {
     .login {
         row-gap: 0px;
-        max-height: 900px;
+        max-height: 1000px;
     }
 
     .loginPanel__inner {

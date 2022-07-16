@@ -69,11 +69,11 @@ const SignUp: React.FC = () => {
   useEffect(() => {
 
     if (isRegConfirmed) {
-      router.push('/welcome1')
+      router.push('/main')
     }
 
     else if (isAuthed) {
-      router.push('/welcome2')
+      router.push('/main')
     }
 
   }, [isRegConfirmed, isAuthed])

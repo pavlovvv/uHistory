@@ -7,7 +7,7 @@ import Image from "next/dist/client/image";
 import React, { useEffect, useRef } from "react";
 import InitialLayout from "../components/layouts/InitialLayout";
 import char from "../public/images/char.png";
-import s from "../styles/main.module.css";
+import s from "../styles/index.module.css";
 import { IGoogleUserData, ILocale } from "../Typescript/interfaces/data";
 import { useAppDispatch, useAppSelector } from './../Typescript/redux-hooks';
 import { setSigning } from "../redux/signSlice";
@@ -55,11 +55,11 @@ const Main: React.FC = () => {
   useEffect(() => {
     
     if (isRegConfirmed) {
-      router.push('/welcome1')
+      router.push('/main')
     }
 
     else if (isAuthed) {
-      router.push('/welcome2')
+      router.push('/main')
     }
   }, [isRegConfirmed, isAuthed])
 
@@ -113,9 +113,7 @@ const Main: React.FC = () => {
 
         );
       },
-    });
-
-    
+    }); 
 
     window.google?.accounts.id.renderButton(
       document.getElementById("googleContinue"),
@@ -136,7 +134,7 @@ const Main: React.FC = () => {
         <main className={s.main__main}>
           <section className={s.main__mainTop + " " + s.container}>
             <section className={s.main__mainSectionLeft + " " + s.sectionLeft}>
-              <motion.div
+              <motion.h2
                 className={s.sectionLeftText}
                 initial="hidden"
                 animate="visible"
@@ -144,9 +142,9 @@ const Main: React.FC = () => {
                 transition={{ delay: 0 }}
               >
                 {t("discover")}
-              </motion.div>
+              </motion.h2>
 
-              <motion.div
+              <motion.h2
                 className={s.sectionLeftText}
                 initial="hidden"
                 animate="visible"
@@ -154,9 +152,9 @@ const Main: React.FC = () => {
                 transition={{ delay: 0.2 }}
               >
                 {t("learn")}
-              </motion.div>
+              </motion.h2>
 
-              <motion.div
+              <motion.h2
                 className={s.sectionLeftText}
                 initial="hidden"
                 animate="visible"
@@ -164,9 +162,9 @@ const Main: React.FC = () => {
                 transition={{ delay: 0.4 }}
               >
                 {t("collect")}
-              </motion.div>
+              </motion.h2>
 
-              <motion.div
+              <motion.h2
                 className={s.sectionLeftText + " " + s.outlinedText}
                 style={{ marginBottom: "25px" }}
                 initial="hidden"
@@ -175,7 +173,7 @@ const Main: React.FC = () => {
                 transition={{ delay: 0.6 }}
               >
                 {t("with_web_3.0")}
-              </motion.div>
+              </motion.h2>
 
               <div className={s.main__mainSectionLeftAuth}>
                 <Link href="/signup" passHref>

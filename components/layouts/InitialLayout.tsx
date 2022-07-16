@@ -6,7 +6,7 @@ import React from "react";
 import UAIcon from "../../public/images/UAIcon.png";
 import uHistoryText from "../../public/images/uhistory_text.png";
 import USIcon from "../../public/images/USIcon.png";
-import s from "../../styles/main.module.css";
+import s from "../../styles/index.module.css";
 import { IInitialLayoutProps } from "./../../Typescript/interfaces/data";
 import { useAppSelector } from "../../Typescript/redux-hooks";
 import Head from "next/dist/shared/lib/head";
