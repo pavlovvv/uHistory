@@ -2,15 +2,47 @@ import Image from "next/dist/client/image";
 import { useState } from "react";
 import SwipeableViews from "react-swipeable-views";
 import ethereumIcon from "../public/images/ethereum.svg";
-import openSeaIcon from '../public/images/opensea.png'
+import dollarIcon from "../public/images/dollar.svg";
+import hryvniaIcon from "../public/images/hryvnia.svg";
+import openSeaIcon from "../public/images/opensea.png";
 import s from "../styles/main.module.css";
 import setBackground from "./../other/setBackground";
 import MainLayout from "../components/layouts/MainLayout";
 import Link from "next/dist/client/link";
 import { useMediaQuery } from "@mui/material";
 import { useAppSelector } from "../Typescript/redux-hooks";
+import { ILocale, IMainProps } from "../Typescript/interfaces/data";
+import { serverSideTranslations } from "next-i18next/serverSideTranslations";
+import { useTranslation } from "react-i18next";
 
-const Main: React.FC = () => {
+export async function getStaticProps({ locale }: ILocale) {
+  const res1 = await fetch(
+    "https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange?json"
+  );
+
+  const res2 = await fetch(
+    "https://min-api.cryptocompare.com/data/pricemulti?fsyms=ETH,DASH&tsyms=BTC,USD,EUR&api_key=aae069f982b821a9a7f904b5e57a8b14ce233552a23feaf832ca61aa9e533f45"
+  );
+
+  const res1arr = await res1.json();
+  const res2Obj = await res2.json();
+
+  const USDCurrency = res1arr.find((e) => {
+    return e.cc === "USD";
+  });
+
+  const USD_ETH = res2Obj.ETH.USD;
+
+  return {
+    props: {
+      USDCurrency: USDCurrency.rate,
+      USD_ETH,
+      ...(await serverSideTranslations(locale, ["common", "main", "settings"])),
+    },
+  };
+}
+
+const Main: React.FC<IMainProps> = (props) => {
   const testObjects = [
     {
       id: 1,
@@ -40,8 +72,10 @@ const Main: React.FC = () => {
       id: 4,
       name: "Item name",
       rarity: "Incredible",
+      //background:
+        //"https://cat-talk-s3.s3.eu-central-1.amazonaws.com/2022-07-16T21-10-17.362ZMykhailo%20Hrushevsky_350x350.png?imwidth=64",
       background:
-        "https://cat-talk-s3.s3.eu-central-1.amazonaws.com/2022-07-15T16-25-38.524Ztest-img.png?imwidth=128",
+      "https://cat-talk-s3.s3.eu-central-1.amazonaws.com/2022-07-16T21-25-55.195ZMykhailo%20Hrushevsky_250x250.png?imwidth=64",
       cost: 0.03,
     },
     {
@@ -73,7 +107,7 @@ const Main: React.FC = () => {
       name: "Item name",
       rarity: "Incredible",
       background:
-        "https://cat-talk-s3.s3.eu-central-1.amazonaws.com/2022-07-15T16-25-38.524Ztest-img.png?imwidth=128",
+        "https://cat-talk-s3.s3.eu-central-1.amazonaws.com/2022-07-16T21-25-55.195ZMykhailo%20Hrushevsky_250x250.png?imwidth=64",
       cost: 0.03,
     },
   ];
@@ -143,45 +177,46 @@ const Main: React.FC = () => {
     setActiveCategory2Step(step);
   };
 
-  const name = useAppSelector(state => state.sign.name)
+  const name = useAppSelector((state) => state.sign.name);
+  const currency = useAppSelector((state) => state.sign.currency);
+
+  const { t } = useTranslation("main");
+  const st = useTranslation("settings").t;
 
   return (
-    <MainLayout>
+    <MainLayout t={st}>
       <section className={s.left}>
         <div className={s.container}>
-          <h2 className={s.left__title}> Welcome, {name} </h2>
+          <h2 className={s.left__title}>
+            {t("welcome")}, {name}{" "}
+          </h2>
 
           <section className={s.left__category}>
             <div className={s.categoryContainer}>
-              <h4 className={s.left__categoryTitle}>
-                Category 1
-              </h4>
-              <Link href='https://opensea.io/uHistory' passHref>
-                <a target='_blank'>
-              <Image
-                src={openSeaIcon.src}
-                width="50px"
-                height="50px"
-                alt="uHistory_opensea"
-              />
-              </a>
+              <h4 className={s.left__categoryTitle}>{t("category")} 1</h4>
+              <Link href="https://opensea.io/uHistory" passHref>
+                <a target="_blank">
+                  <Image
+                    src={openSeaIcon.src}
+                    width="50px"
+                    height="50px"
+                    alt="uHistory_opensea"
+                  />
+                </a>
               </Link>
-              </div>
+            </div>
 
             <div className={s.left__categoryItems}>
-                <button
-                  className={s.left__categoryItemsButtonLeft}
-                  onClick={handleBack}
-                  disabled={activeStep === 0}
-                >
-                  <i
-                    className="bi bi-arrow-left"
-                    style={
-                      !max1100 ? { fontSize: "45px" } : { fontSize: "30px" }
-                    }
-                  />
-                </button>
-              
+              <button
+                className={s.left__categoryItemsButtonLeft}
+                onClick={handleBack}
+                disabled={activeStep === 0}
+              >
+                <i
+                  className="bi bi-arrow-left"
+                  style={!max1100 ? { fontSize: "45px" } : { fontSize: "30px" }}
+                />
+              </button>
 
               <SwipeableViews
                 index={activeStep}
@@ -193,6 +228,12 @@ const Main: React.FC = () => {
                     <div className={s.categoryItemsContainer} key={i}>
                       {e.map((e: any, i: number) => {
                         const bgColor: string = setBackground(e.rarity);
+
+                        const dollarOne = Math.round(e.cost * props.USD_ETH);
+                        const hryvniaOne = Math.round(
+                          e.cost * props.USD_ETH * props.USDCurrency
+                        );
+
                         return (
                           <Link href={`/art/${e.id}`} passHref key={e.id}>
                             <a target="_blank">
@@ -224,13 +265,39 @@ const Main: React.FC = () => {
                                   <div
                                     className={s.left__categoryItemFooterCost}
                                   >
-                                    <Image
-                                      src={ethereumIcon.src}
-                                      width="11px"
-                                      height="19px"
-                                      alt="uHistory_eth"
-                                    />
-                                    <span>{e.cost}</span>
+                                    {currency === "eth" && (
+                                      <>
+                                        <Image
+                                          src={ethereumIcon.src}
+                                          width="11px"
+                                          height="19px"
+                                          alt="uHistory eth"
+                                        />
+                                        <span>{e.cost}</span>
+                                      </>
+                                    )}
+                                    {currency === "dollar" && (
+                                      <>
+                                        <Image
+                                          src={dollarIcon.src}
+                                          width="11px"
+                                          height="19px"
+                                          alt="uHistory dollar"
+                                        />
+                                        <span>{dollarOne}</span>
+                                      </>
+                                    )}
+                                    {currency === "hryvnia" && (
+                                      <>
+                                        <Image
+                                          src={hryvniaIcon.src}
+                                          width="11px"
+                                          height="19px"
+                                          alt="uHistory hryvnia"
+                                        />
+                                        <span>{hryvniaOne}</span>
+                                      </>
+                                    )}
                                   </div>
                                 </div>
                               </div>
@@ -263,34 +330,30 @@ const Main: React.FC = () => {
 
           <section className={s.left__category}>
             <div className={s.categoryContainer}>
-              <h4 className={s.left__categoryTitle}>
-                Category 2
-              </h4>
-              <Link href='https://opensea.io/uHistory' passHref>
-                <a target='_blank'>
-              <Image
-                src={openSeaIcon.src}
-                width="50px"
-                height="50px"
-                alt="uHistory_opensea"
-              />
-              </a>
+              <h4 className={s.left__categoryTitle}>{t("category")} 2</h4>
+              <Link href="https://opensea.io/uHistory" passHref>
+                <a target="_blank">
+                  <Image
+                    src={openSeaIcon.src}
+                    width="50px"
+                    height="50px"
+                    alt="uHistory_opensea"
+                  />
+                </a>
               </Link>
-              </div>
+            </div>
 
             <div className={s.left__categoryItems}>
-            <button
-                  className={s.left__categoryItemsButtonLeft}
-                  onClick={handleCategory2Back}
-                  disabled={activeCategory2Step === 0}
-                >
-                  <i
-                    className="bi bi-arrow-left"
-                    style={
-                      !max1100 ? { fontSize: "45px" } : { fontSize: "30px" }
-                    }
-                  />
-                </button>
+              <button
+                className={s.left__categoryItemsButtonLeft}
+                onClick={handleCategory2Back}
+                disabled={activeCategory2Step === 0}
+              >
+                <i
+                  className="bi bi-arrow-left"
+                  style={!max1100 ? { fontSize: "45px" } : { fontSize: "30px" }}
+                />
+              </button>
 
               <SwipeableViews
                 index={activeCategory2Step}
@@ -302,6 +365,12 @@ const Main: React.FC = () => {
                     <div className={s.categoryItemsContainer} key={i}>
                       {e.map((e: any, i: number) => {
                         const bgColor: string = setBackground(e.rarity);
+
+                        const dollarOne = Math.round(e.cost * props.USD_ETH);
+                        const hryvniaOne = Math.round(
+                          e.cost * props.USD_ETH * props.USDCurrency
+                        );
+
                         return (
                           <Link href={`/art/${e.id}`} passHref key={e.id}>
                             <a target="_blank">
@@ -333,13 +402,39 @@ const Main: React.FC = () => {
                                   <div
                                     className={s.left__categoryItemFooterCost}
                                   >
-                                    <Image
-                                      src={ethereumIcon.src}
-                                      width="11px"
-                                      height="19px"
-                                      alt="uHistory_eth"
-                                    />
-                                    <span>{e.cost}</span>
+                                    {currency === "eth" && (
+                                      <>
+                                        <Image
+                                          src={ethereumIcon.src}
+                                          width="11px"
+                                          height="19px"
+                                          alt="uHistory eth"
+                                        />
+                                        <span>{e.cost}</span>
+                                      </>
+                                    )}
+                                    {currency === "dollar" && (
+                                      <>
+                                        <Image
+                                          src={dollarIcon.src}
+                                          width="11px"
+                                          height="19px"
+                                          alt="uHistory dollar"
+                                        />
+                                        <span>{dollarOne}</span>
+                                      </>
+                                    )}
+                                    {currency === "hryvnia" && (
+                                      <>
+                                        <Image
+                                          src={hryvniaIcon.src}
+                                          width="11px"
+                                          height="19px"
+                                          alt="uHistory hryvnia"
+                                        />
+                                        <span>{hryvniaOne}</span>
+                                      </>
+                                    )}
                                   </div>
                                 </div>
                               </div>

@@ -134,11 +134,29 @@ export const continueWithGoogle = createAsyncThunk<
   }
 );
 
+export interface IUpdateCurrency {
+  currency: string;
+}
+
+export const updateCurrency = createAsyncThunk<
+  void,
+  IUpdateCurrency,
+  { dispatch: AppDispatch }
+>(
+  "sign/updateCurrency",
+  async function ({ currency }, { dispatch }) {
+        const response = await API.signAPI.updateCurrency(currency);
+        dispatch(getOwnInfo())
+  }
+);
+
+
 interface ISetUser {
   id: number
   name: string
   email: string
   type: string
+  currency: string
 }
 
 
@@ -157,6 +175,8 @@ interface ISignState {
   logInError: StringOrNull
   type: StringOrNull
   isRegConfirmed: boolean
+  currency: StringOrNull
+  key: number
 }
 
 const initialState: ISignState = {
@@ -165,12 +185,14 @@ const initialState: ISignState = {
   email: null,
   name: null,
   type: null,
+  currency: null,
   id: null,
   isAuthed: false,
   isAuthFulfilled: false,
   error: null,
   logInError: null,
-  isRegConfirmed: false
+  isRegConfirmed: false,
+  key: 0
 };
 
 const signSlice = createSlice({
@@ -217,8 +239,13 @@ const signSlice = createSlice({
       state.name = action.payload.name;
       state.id = action.payload.id;
       state.type = action.payload.type;
+      state.currency = action.payload.currency
       state.isAuthed = true;
       state.isAuthFulfilled = true;
+    },
+
+    refreshComponent(state) {
+      state.key++
     },
 
     setAuthFulfilled(state, action: PayloadAction<boolean>) {
@@ -238,6 +265,7 @@ export const {
   setPending,
   setUser,
   setAuthFulfilled,
+  refreshComponent,
 } = signSlice.actions;
 
 export default signSlice.reducer;

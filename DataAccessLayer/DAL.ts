@@ -33,6 +33,11 @@ export const API = {
         continueWithGoogle: (email: string | null, name: string | null) => {
             return instance.post(`auth/continueWithGoogle`, {email, name})
                 .then(response => response)
+        },
+
+        updateCurrency: (currency: string) => {
+            return instance.put(`auth/updateCurrency`, {currency})
+                .then(response => response)
         }
     }
 }

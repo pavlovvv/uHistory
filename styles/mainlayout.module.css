@@ -32,6 +32,12 @@
 .right__navItem {
     width: 100%;
     padding: 0 10px;
+    transition: 0.4s;
+    -webkit-transition: 0.4s;
+}
+
+.right__navItem:hover {
+    background: rgba(188, 217, 255, 0.2)
 }
 
 
@@ -68,6 +74,97 @@
     align-items: center;
     position: relative;
     cursor: pointer;
+    position: relative;
+}
+
+.popover__item {
+    padding: 10px 0;
+    border-bottom: 1px rgb(128,128,128, 0.3) solid;
+}
+
+.popoverContainer {
+    padding-left: 40px;
+    padding-right: 40px;
+}
+
+.popover__topInner, .popover__bottomText1 {
+    text-align: center;
+}
+
+.popover__topTitle, .popover__center1Text, .popover__center2Text {
+    font-family: 'Candara';
+    font-size: 19px;
+    text-transform: uppercase;
+}
+
+.popover__center1Button {
+    font-family: 'Candara';
+    font-size: 16px;
+    text-transform: uppercase;
+    padding: 3px 7px;
+    border: 1px #fff solid;
+    border-radius: 10px;
+    color: #fff;
+}
+
+.popover__currencyInner {
+    position: absolute;
+    background-color: #000000;
+    border: 1px #fff solid;
+    border-radius: 13px;
+    z-index: 1;
+    left: -19px;
+    top: 33px;
+    text-align: center;
+}
+
+.popover__currencyItem {
+    padding: 7px 3px;
+    border-bottom: 1px #fff solid;
+    text-transform: uppercase;
+    font-size: 13px;
+    font-family: 'Candara';
+    cursor: pointer;
+}
+
+.popover__currencyItemContainer {
+    padding-left: 30px;
+    padding-right: 30px;
+    width: 128px;
+}
+
+.popover__center1Inner, .popover__center2Inner {
+    display: flex;
+    flex-direction: row;
+    column-gap: 10px;
+    align-items: center;
+}
+
+.popover__center2Inner {
+    column-gap: 25px;
+}
+
+.popover__center2Languages {
+    display: flex;
+    flex-direction: row;
+    column-gap: 22px;
+}
+
+.popover__bottomInner {
+    text-align: center;
+    color: grey;
+    text-transform: uppercase;
+    text-decoration-line: underline;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 3px;
+    display: flex;
+    column-gap: 35px;
+    justify-content: center;
+    font-size: 14px;
+}
+
+.popover__bottomText2 {
+    cursor: pointer;
 }
 
 .preloader{
@@ -76,7 +173,7 @@
     background-image: url('../public/images/bgMain.png');
     background-repeat: no-repeat;
     background-size:cover;
-     overflow: hidden;
+    overflow: hidden;
 }
 
 .preloaderitem {

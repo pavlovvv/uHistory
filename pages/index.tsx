@@ -10,7 +10,7 @@ import char from "../public/images/char.png";
 import s from "../styles/index.module.css";
 import { IGoogleUserData, ILocale } from "../Typescript/interfaces/data";
 import { useAppDispatch, useAppSelector } from './../Typescript/redux-hooks';
-import { setSigning } from "../redux/signSlice";
+import { refreshComponent, setSigning } from "../redux/signSlice";
 import Link from "next/dist/client/link";
 import { useRouter } from "next/dist/client/router";
 import { continueWithGoogle } from "../redux/signSlice";
@@ -77,56 +77,73 @@ const Main: React.FC = () => {
   }, []);
 
   useEffect(() => {
-    window.google?.accounts.id.initialize({
-      client_id: process.env.NEXT_PUBLIC_CAT_TALK_GOOGLE_ACCOUNTS_CLIENT_ID,
-      callback: (response: any) => {
-        const userData: IGoogleUserData = jwtDecode(response.credential);
-        const sentUserData: IGoogleUserData = {
-          email: null,
-          given_name: null,
-          picture: null,
-        };
 
-        sentUserData.email = userData.email
-        sentUserData.given_name = userData.given_name
-
-        if (userData.family_name) {
-          sentUserData.given_name = sentUserData.given_name.concat(' ' + userData.family_name)
+    const googleAuth = () :void => {
+      window.google.accounts.id.initialize({
+        client_id: process.env.NEXT_PUBLIC_CAT_TALK_GOOGLE_ACCOUNTS_CLIENT_ID,
+        callback: (response: any) => {
+          const userData: IGoogleUserData = jwtDecode(response.credential);
+          const sentUserData: IGoogleUserData = {
+            email: null,
+            given_name: null,
+            picture: null,
+          };
+  
+          sentUserData.email = userData.email
+          sentUserData.given_name = userData.given_name
+  
+          if (userData.family_name) {
+            sentUserData.given_name = sentUserData.given_name.concat(' ' + userData.family_name)
+          }
+  
+          const name_surname: string[] = sentUserData.given_name.split(' ')
+  
+          let str: string = ''
+      
+          for (let i = 0; i < name_surname.length; i++) {
+            str = str.concat(name_surname[i].charAt(0).toUpperCase() +
+            name_surname[i].slice(1).toLowerCase())
+            str = str.concat(' ')
+          }
+          str = str.trimEnd()
+  
+          dispatch(
+            continueWithGoogle({
+              email: sentUserData.email,
+              name: str
+            })
+  
+          );
+        },
+      }); 
+  
+      window.google.accounts.id.renderButton(
+        document.getElementById("googleContinue"),
+        {
+          theme: "filled_black",
+          locale: "en",
+          size: !max500 ? "large" : "medium",
+          text: "continue_with",
+          logo_alignment: "left",
+          type: "standard",
+          width: "100",
         }
+      );
+    }
 
-        const name_surname: string[] = sentUserData.given_name.split(' ')
-
-        let str: string = ''
-    
-        for (let i = 0; i < name_surname.length; i++) {
-          str = str.concat(name_surname[i].charAt(0).toUpperCase() +
-          name_surname[i].slice(1).toLowerCase())
-          str = str.concat(' ')
-        }
-        str = str.trimEnd()
-
-        dispatch(
-          continueWithGoogle({
-            email: sentUserData.email,
-            name: str
-          })
-
-        );
-      },
-    }); 
-
-    window.google?.accounts.id.renderButton(
-      document.getElementById("googleContinue"),
-      {
-        theme: "filled_black",
-        locale: "en",
-        size: !max500 ? "large" : "medium",
-        text: "continue_with",
-        logo_alignment: "left",
-        type: "standard",
-        width: "100",
+    const googleLoad = (): void => {
+      if (window.google) {
+        googleAuth()
       }
-    );
+  
+      else {
+        setTimeout(() => {
+          googleLoad()
+        }, 1000)
+      }
+    }
+
+    googleLoad()
   }, [max500]);
 
   return (
@@ -203,4 +220,11 @@ const Main: React.FC = () => {
   );
 };
 
-export default Main;
+const InitialMain: React.FC = () => {
+
+  const key = useAppSelector(state => state.sign.key)
+
+  return <Main key={key}/>
+}
+
+export default InitialMain;

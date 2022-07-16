@@ -43,3 +43,12 @@ export interface ILoginSubmit {
   password: string
   email: string
 }
+
+export interface IMainProps {
+  USD_ETH: number,
+  USDCurrency: number
+}
+
+export interface IMainLayoutProps {
+  t: (translation: string) => string
+}

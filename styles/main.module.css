@@ -60,8 +60,8 @@
 .left__categoryItemName {
     font-size: 22px;
     padding: 10px;
-    backdrop-filter: blur(100px);
-    -webkit-backdrop-filter: blur(100px);
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
     background-color: rgb( 0, 0, 0, 0.4);
     border-radius: 10px 10px 0 0;
     border-bottom: 1px #fff solid;
@@ -72,8 +72,8 @@
     justify-content: space-around;
     align-items: center;
     padding: 10px;
-    backdrop-filter: blur(100px);
-    -webkit-backdrop-filter: blur(100px);
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
     background-color: rgb( 0, 0, 0, 0.4);
     border-radius: 0 0 10px 10px;
     border-top: 1px #fff solid;
