@@ -39,5 +39,17 @@ export const API = {
             return instance.put(`auth/updateCurrency`, {currency})
                 .then(response => response)
         }
+    },
+
+    profileAPI: {
+        updateInfo: (name: string, email: string, telegram: string | null, instagram: string | null) => {
+            return instance.put(`auth/updateInfo`, {name, email, telegram, instagram})
+                .then(response => response)
+        },
+
+        changeAvatar: (avatar: number) => {
+            return instance.put(`auth/changeAvatar`, {avatar})
+                .then(response => response)
+        },
     }
 }

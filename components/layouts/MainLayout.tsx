@@ -40,6 +40,7 @@ const MainLayout: React.FC<IMainLayoutProps> = ({ children, t }) => {
 
   const isAuthed = useAppSelector((state) => state.sign.isAuthed);
   const isAuthFulfilled = useAppSelector((state) => state.sign.isAuthFulfilled);
+  const currency = useAppSelector((state) => state.sign.currency);
 
   useEffect(() => {
     if (!isInfoCheckDone.current) {
@@ -112,6 +113,7 @@ const MainLayout: React.FC<IMainLayoutProps> = ({ children, t }) => {
                 return (
                   <div style={{ width: "100%" }} key={i}>
                     {i !== navItems.length - 1 ? (
+                      <Link href={linkItems[i]} passHref>
                       <div
                         className={s.right__navItem}
                         style={
@@ -134,6 +136,7 @@ const MainLayout: React.FC<IMainLayoutProps> = ({ children, t }) => {
                           />
                         </div>
                       </div>
+                      </Link>
                     ) : (
                       <div
                         className={s.right__navItem}
@@ -202,7 +205,9 @@ const MainLayout: React.FC<IMainLayoutProps> = ({ children, t }) => {
                                   onClick={handleCurrencyClick}
                                   className={s.popover__center1Button}
                                 >
-                                  Ethereum
+                                  {currency === 'eth' && 'Ethereum'}
+                                  {currency === 'dollar' && 'US Dollar'}
+                                  {currency === 'hryvnia' && t('hryvnia')}
                                 </button>
                                 <ClickAwayListener
                               mouseEvent="onMouseDown"

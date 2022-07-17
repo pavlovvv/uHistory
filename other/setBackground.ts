@@ -1,4 +1,4 @@
-export default function setBackground(rarity: string) {
+export default function setBackground(rarity: string):string {
   switch (rarity) {
     case "Legendary":
       return "linear-gradient(45deg, rgba(225,193,21,1) 0%, rgba(227,213,119,1) 100%)";

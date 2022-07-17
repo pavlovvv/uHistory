@@ -5,5 +5,7 @@
     "max": "Maximum {{count}} characters",
     "invalid_email": "Invalid email",
     "invalid_name": "Invalid name",
-    "invalid_password": "Invalid password"
+    "invalid_password": "Invalid password",
+    "invalid_instagram": "Invalid instagram link",
+    "invalid_telegram": "Invalid telegram"
 }

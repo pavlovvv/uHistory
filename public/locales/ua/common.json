@@ -5,5 +5,7 @@
     "max": "Максимум {{count}} символів",
     "invalid_email": "Неправильний email",
     "invalid_name": "Неправильне ім'я",
-    "invalid_password": "Неправильний пароль"
+    "invalid_password": "Неправильний пароль",
+    "invalid_instagram": "Неправильне Інстаграм посилання",
+    "invalid_telegram": "Неправильний Телеграм аккаунт"
 }

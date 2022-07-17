@@ -10,7 +10,7 @@ import char from "../public/images/char.png";
 import s from "../styles/index.module.css";
 import { IGoogleUserData, ILocale } from "../Typescript/interfaces/data";
 import { useAppDispatch, useAppSelector } from './../Typescript/redux-hooks';
-import { refreshComponent, setSigning } from "../redux/signSlice";
+import { setSigning } from "../redux/signSlice";
 import Link from "next/dist/client/link";
 import { useRouter } from "next/dist/client/router";
 import { continueWithGoogle } from "../redux/signSlice";
@@ -218,13 +218,6 @@ const Main: React.FC = () => {
         </main>
     </InitialLayout>
   );
-};
+}; 
 
-const InitialMain: React.FC = () => {
-
-  const key = useAppSelector(state => state.sign.key)
-
-  return <Main key={key}/>
-}
-
-export default InitialMain;
+export default Main;

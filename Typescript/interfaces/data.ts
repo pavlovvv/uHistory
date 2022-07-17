@@ -52,3 +52,33 @@ export interface IMainProps {
 export interface IMainLayoutProps {
   t: (translation: string) => string
 }
+
+export interface IInputProfileValues {
+  email: string
+  name: string
+  telegram: string | null
+  instagram: string | null
+}
+
+export interface IProfileSubmit {
+  name: string
+  email: string
+  telegram: string
+  instagram: string
+}
+
+export interface IItemProps {
+  item:{
+    id: number
+    name: string
+    rarity: string
+    category: string
+    price: number
+    avatar: string
+    opensea: string
+    qr1: string
+    qr2: string
+    qr1img: string
+    qr2img: string    
+  }
+}

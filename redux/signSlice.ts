@@ -1,17 +1,11 @@
 import {
-  createSlice,
-  createAsyncThunk,
-  PayloadAction,
-  isPending,
+  createAsyncThunk, createSlice, PayloadAction
 } from "@reduxjs/toolkit";
-import { AppDispatch } from "./store";
 import {
-  getAuth,
-  createUserWithEmailAndPassword,
-  signInWithEmailAndPassword,
-  signInAnonymously,
+  createUserWithEmailAndPassword, getAuth, signInWithEmailAndPassword
 } from "firebase/auth";
 import { API } from "../DataAccessLayer/DAL";
+import { AppDispatch } from "./store";
 
 export interface ISignUp {
   email: string;
@@ -59,7 +53,7 @@ export const auth = createAsyncThunk<object, IAuth, { dispatch: AppDispatch }>(
     try {
       dispatch(setPending(true));
       const response = await API.signAPI.auth(email, password);
-      
+
       const auth = getAuth();
       signInWithEmailAndPassword(auth, email, password).catch(console.log);
 
@@ -114,25 +108,18 @@ export const continueWithGoogle = createAsyncThunk<
   void,
   IContinueWithGoogle,
   { dispatch: AppDispatch }
->(
-  "sign/continueWithGoogle",
-  async function ({ email, name }, { dispatch }) {
-    try {
-        const response = await API.signAPI.continueWithGoogle(
-          email,
-          name
-        );
-        if (response.data.msg === 'Login confirmed') {
-          dispatch(googleLogin())
-        }
-        else {
-          dispatch(setAuth(true))
-        }
-    } catch (error) {
-      dispatch(setError("Some error occured. Try again later"));
+>("sign/continueWithGoogle", async function ({ email, name }, { dispatch }) {
+  try {
+    const response = await API.signAPI.continueWithGoogle(email, name);
+    if (response.data.msg === "Login confirmed") {
+      dispatch(googleLogin());
+    } else {
+      dispatch(setAuth(true));
     }
+  } catch (error) {
+    dispatch(setError("Some error occured. Try again later"));
   }
-);
+});
 
 export interface IUpdateCurrency {
   currency: string;
@@ -142,41 +129,51 @@ export const updateCurrency = createAsyncThunk<
   void,
   IUpdateCurrency,
   { dispatch: AppDispatch }
->(
-  "sign/updateCurrency",
-  async function ({ currency }, { dispatch }) {
-        const response = await API.signAPI.updateCurrency(currency);
-        dispatch(getOwnInfo())
-  }
-);
-
+>("sign/updateCurrency", async function ({ currency }, { dispatch }) {
+  const response = await API.signAPI.updateCurrency(currency);
+  dispatch(getOwnInfo());
+});
 
 interface ISetUser {
-  id: number
-  name: string
-  email: string
-  type: string
-  currency: string
+  id: number;
+  name: string;
+  email: string;
+  type: string;
+  currency: string;
+  telegram: string
+  instagram: string
+  liked: number
+  watched: number
+  registration_date: Date
+  avatar: number
 }
-
-
 
 type StringOrNull = string | null;
 
 interface ISignState {
-  isSigning: boolean
-  isPending: boolean
-  email: string
-  name: StringOrNull
-  isAuthed: boolean
-  id: number | null
-  isAuthFulfilled: boolean
-  error: StringOrNull
-  logInError: StringOrNull
-  type: StringOrNull
-  isRegConfirmed: boolean
-  currency: StringOrNull
-  key: number
+  isSigning: boolean;
+  isPending: boolean;
+  email: string;
+  name: StringOrNull;
+  isAuthed: boolean;
+  id: number | null;
+  isAuthFulfilled: boolean;
+  error: StringOrNull;
+  logInError: StringOrNull;
+  type: StringOrNull;
+  isRegConfirmed: boolean;
+  currency: StringOrNull;
+  key: number;
+  avatar: number
+  registration_date: Date | null
+  links: {
+    telegram: StringOrNull
+    instagram: StringOrNull
+  }
+  stats: {
+    liked: number
+    watched: number
+  }
 }
 
 const initialState: ISignState = {
@@ -192,7 +189,17 @@ const initialState: ISignState = {
   error: null,
   logInError: null,
   isRegConfirmed: false,
-  key: 0
+  key: 0,
+  avatar: 0,
+  registration_date: null,
+  links: {
+    telegram: null,
+    instagram: null
+  },
+  stats: {
+    liked: 0,
+    watched: 0
+  }
 };
 
 const signSlice = createSlice({
@@ -210,7 +217,7 @@ const signSlice = createSlice({
 
     confirmReg(state) {
       state.error = null;
-      state.isRegConfirmed = true
+      state.isRegConfirmed = true;
     },
 
     googleLogin(state) {
@@ -239,13 +246,19 @@ const signSlice = createSlice({
       state.name = action.payload.name;
       state.id = action.payload.id;
       state.type = action.payload.type;
-      state.currency = action.payload.currency
+      state.currency = action.payload.currency;
+      state.avatar = action.payload.avatar;
+      state.registration_date = action.payload.registration_date;
+      state.links.telegram = action.payload.telegram;
+      state.links.instagram = action.payload.instagram;
+      state.stats.liked = action.payload.liked;
+      state.stats.watched = action.payload.watched;
       state.isAuthed = true;
       state.isAuthFulfilled = true;
     },
 
     refreshComponent(state) {
-      state.key++
+      state.key++;
     },
 
     setAuthFulfilled(state, action: PayloadAction<boolean>) {

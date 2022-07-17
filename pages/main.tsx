@@ -72,8 +72,6 @@ const Main: React.FC<IMainProps> = (props) => {
       id: 4,
       name: "Item name",
       rarity: "Incredible",
-      //background:
-        //"https://cat-talk-s3.s3.eu-central-1.amazonaws.com/2022-07-16T21-10-17.362ZMykhailo%20Hrushevsky_350x350.png?imwidth=64",
       background:
       "https://cat-talk-s3.s3.eu-central-1.amazonaws.com/2022-07-16T21-25-55.195ZMykhailo%20Hrushevsky_250x250.png?imwidth=64",
       cost: 0.03,
@@ -139,6 +137,8 @@ const Main: React.FC<IMainProps> = (props) => {
   if (max700) {
     size = 2;
   }
+
+  const max550 = useMediaQuery("(max-width:550px)");
 
   const max359 = useMediaQuery("(max-width:359px)");
   if (max359) {

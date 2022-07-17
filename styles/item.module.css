@@ -1,0 +1,36 @@
+.itemPage {
+    width: 96vw;
+    min-height: 100vh;
+    font-family: 'Candara';
+    text-transform: uppercase;
+    font-weight: 300;
+    color: #fff;
+}
+
+.container {
+    margin: 50px;
+}
+
+.item__header {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.item__headerLeft {
+    padding: 40px 50px;
+    display: flex;
+    flex-direction: row;
+    border: 1px #fff solid;
+    border-radius: 10px;
+}
+
+.item__headerLeftInfoName {
+    font-weight: bold;
+    font-size: 30px;
+    color: #bcd9ff;
+}
+
+.item__headerLeftInfoEl {
+    font-size: 25px;
+}
