@@ -14,11 +14,19 @@ import { useAppSelector } from "../Typescript/redux-hooks";
 import { ILocale, IMainProps } from "../Typescript/interfaces/data";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import { useTranslation } from "react-i18next";
+import { IItem } from './../Typescript/interfaces/data';
 
 export async function getStaticProps({ locale }: ILocale) {
+
   const res1 = await fetch(
     "https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange?json"
   );
+
+  const resItems = await fetch(
+    `https://uhistoryapi.herokuapp.com/items/getItems`
+  );
+
+  const items = await resItems.json()
 
   const res2 = await fetch(
     "https://min-api.cryptocompare.com/data/pricemulti?fsyms=ETH,DASH&tsyms=BTC,USD,EUR&api_key=aae069f982b821a9a7f904b5e57a8b14ce233552a23feaf832ca61aa9e533f45"
@@ -37,80 +45,25 @@ export async function getStaticProps({ locale }: ILocale) {
     props: {
       USDCurrency: USDCurrency.rate,
       USD_ETH,
+      items,
       ...(await serverSideTranslations(locale, ["common", "main", "settings"])),
     },
   };
 }
 
 const Main: React.FC<IMainProps> = (props) => {
-  const testObjects = [
-    {
-      id: 1,
-      name: "Item name",
-      rarity: "Legendary",
-      background:
-        "https://cat-talk-s3.s3.eu-central-1.amazonaws.com/2022-07-15T16-25-38.524Ztest-img.png?imwidth=128",
-      cost: 0.03,
-    },
-    {
-      id: 2,
-      name: "Item name",
-      rarity: "Epic",
-      background:
-        "https://cat-talk-s3.s3.eu-central-1.amazonaws.com/2022-07-15T16-26-31.450Ztest-img2.png?imwidth=128",
-      cost: 0.03,
-    },
-    {
-      id: 3,
-      name: "Item name",
-      rarity: "Uncommon",
-      background:
-        "https://cat-talk-s3.s3.eu-central-1.amazonaws.com/2022-07-15T16-26-31.450Ztest-img2.png?imwidth=128",
-      cost: 0.03,
-    },
-    {
-      id: 4,
-      name: "Item name",
-      rarity: "Incredible",
-      background:
-      "https://cat-talk-s3.s3.eu-central-1.amazonaws.com/2022-07-16T21-25-55.195ZMykhailo%20Hrushevsky_250x250.png?imwidth=64",
-      cost: 0.03,
-    },
-    {
-      id: 5,
-      name: "Item name",
-      rarity: "Legendary",
-      background:
-        "https://cat-talk-s3.s3.eu-central-1.amazonaws.com/2022-07-15T16-25-38.524Ztest-img.png?imwidth=128",
-      cost: 0.03,
-    },
-    {
-      id: 6,
-      name: "Item name",
-      rarity: "Epic",
-      background:
-        "https://cat-talk-s3.s3.eu-central-1.amazonaws.com/2022-07-15T16-26-31.450Ztest-img2.png?imwidth=128",
-      cost: 0.03,
-    },
-    {
-      id: 7,
-      name: "Item name",
-      rarity: "Incredible",
-      background:
-        "https://cat-talk-s3.s3.eu-central-1.amazonaws.com/2022-07-15T16-25-38.524Ztest-img.png?imwidth=128",
-      cost: 0.03,
-    },
-    {
-      id: 8,
-      name: "Item name",
-      rarity: "Incredible",
-      background:
-        "https://cat-talk-s3.s3.eu-central-1.amazonaws.com/2022-07-16T21-25-55.195ZMykhailo%20Hrushevsky_250x250.png?imwidth=64",
-      cost: 0.03,
-    },
-  ];
+
+  const identities = props.items.filter((e: IItem) => {
+    return e.category === 'Identities'
+  })
+
+  const weapons = props.items.filter((e: IItem) => {
+    return e.category === 'Weapons'
+  })
 
   const subarray = [];
+  const subWeaponsArray = [];
+
   let size = 5;
 
   const max1550 = useMediaQuery("(max-width:1550px)");
@@ -143,8 +96,12 @@ const Main: React.FC<IMainProps> = (props) => {
     size = 1;
   }
 
-  for (let i = 0; i < Math.ceil(testObjects.length / size); i++) {
-    subarray[i] = testObjects.slice(i * size, i * size + size);
+  for (let i = 0; i < Math.ceil(identities.length / size); i++) {
+    subarray[i] = identities.slice(i * size, i * size + size);
+  }
+
+  for (let i = 0; i < Math.ceil(weapons.length / size); i++) {
+    subWeaponsArray[i] = weapons.slice(i * size, i * size + size);
   }
 
   const [activeStep, setActiveStep] = useState<number>(0);
@@ -191,8 +148,8 @@ const Main: React.FC<IMainProps> = (props) => {
 
           <section className={s.left__category}>
             <div className={s.categoryContainer}>
-              <h4 className={s.left__categoryTitle}>{t("category")} 1</h4>
-              <Link href="https://opensea.io/uHistory" passHref>
+              <h4 className={s.left__categoryTitle}>{t("identities")}</h4>
+              <Link href="https://opensea.io/collection/uhistory?search[stringTraits][0][name]=Category&search[stringTraits][0][values][0]=Identities&search[sortAscending]=true&search[sortBy]=PRICE" passHref>
                 <a target="_blank">
                   <Image
                     src={openSeaIcon.src}
@@ -227,18 +184,18 @@ const Main: React.FC<IMainProps> = (props) => {
                       {e.map((e: any, i: number) => {
                         const bgColor: string = setBackground(e.rarity);
 
-                        const dollarOne = Math.round(e.cost * props.USD_ETH);
+                        const dollarOne = Math.round(e.price * props.USD_ETH);
                         const hryvniaOne = Math.round(
-                          e.cost * props.USD_ETH * props.USDCurrency
+                          e.price * props.USD_ETH * props.USDCurrency
                         );
 
                         return (
-                          <Link href={`/art/${e.id}`} passHref key={e.id}>
+                          <Link href={`/items/${e.id}`} passHref key={e.id}>
                             <a target="_blank">
                               <div
                                 className={s.left__categoryItem}
                                 style={{
-                                  backgroundImage: `url(${e.background})`,
+                                  backgroundImage: `url(${e.smallavatar})`,
                                 }}
                               >
                                 <div className={s.left__categoryItemName}>
@@ -271,7 +228,7 @@ const Main: React.FC<IMainProps> = (props) => {
                                           height="19px"
                                           alt="uHistory eth"
                                         />
-                                        <span>{e.cost}</span>
+                                        <span>{e.price}</span>
                                       </>
                                     )}
                                     {currency === "dollar" && (
@@ -328,8 +285,8 @@ const Main: React.FC<IMainProps> = (props) => {
 
           <section className={s.left__category}>
             <div className={s.categoryContainer}>
-              <h4 className={s.left__categoryTitle}>{t("category")} 2</h4>
-              <Link href="https://opensea.io/uHistory" passHref>
+              <h4 className={s.left__categoryTitle}>{t("weapons")}</h4>
+              <Link href="https://opensea.io/collection/uhistory?search[sortAscending]=true&search[sortBy]=PRICE&search[stringTraits][0][name]=Category&search[stringTraits][0][values][0]=Weapons" passHref>
                 <a target="_blank">
                   <Image
                     src={openSeaIcon.src}
@@ -358,24 +315,24 @@ const Main: React.FC<IMainProps> = (props) => {
                 onChangeIndex={handleStepCategory2Change}
                 enableMouseEvents
               >
-                {subarray.map((e: any, i: number) => {
+                {subWeaponsArray.map((e: any, i: number) => {
                   return (
                     <div className={s.categoryItemsContainer} key={i}>
                       {e.map((e: any, i: number) => {
                         const bgColor: string = setBackground(e.rarity);
 
-                        const dollarOne = Math.round(e.cost * props.USD_ETH);
+                        const dollarOne = Math.round(e.price * props.USD_ETH);
                         const hryvniaOne = Math.round(
-                          e.cost * props.USD_ETH * props.USDCurrency
+                          e.price * props.USD_ETH * props.USDCurrency
                         );
 
                         return (
-                          <Link href={`/art/${e.id}`} passHref key={e.id}>
+                          <Link href={`/items/${e.id}`} passHref key={e.id}>
                             <a target="_blank">
                               <div
                                 className={s.left__categoryItem}
                                 style={{
-                                  backgroundImage: `url(${e.background})`,
+                                  backgroundImage: `url(${e.smallavatar})`,
                                 }}
                               >
                                 <div className={s.left__categoryItemName}>
@@ -408,7 +365,7 @@ const Main: React.FC<IMainProps> = (props) => {
                                           height="19px"
                                           alt="uHistory eth"
                                         />
-                                        <span>{e.cost}</span>
+                                        <span>{e.price}</span>
                                       </>
                                     )}
                                     {currency === "dollar" && (

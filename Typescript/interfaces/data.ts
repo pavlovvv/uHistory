@@ -46,7 +46,8 @@ export interface ILoginSubmit {
 
 export interface IMainProps {
   USD_ETH: number,
-  USDCurrency: number
+  USDCurrency: number,
+  items: object[]
 }
 
 export interface IMainLayoutProps {

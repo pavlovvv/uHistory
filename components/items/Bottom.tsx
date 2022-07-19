@@ -20,12 +20,12 @@ const Bottom: React.FC<IItemBottomProps> = ({
   categoryItems,
   t,
 }) => {
+
   const [activeCategoryStep, setActiveCategoryStep] = useState<number>(0);
 
   const requiredCategoryItems = categoryItems.filter((e: IItem) => {
     return e.id !== id;
   });
-
 
   const [shuffledRequiredCategoryItems, setShuffledRequiredCategoryItems] = useState<object[]>()
 
