@@ -138,8 +138,6 @@ const Main: React.FC<IMainProps> = (props) => {
     size = 2;
   }
 
-  const max550 = useMediaQuery("(max-width:550px)");
-
   const max359 = useMediaQuery("(max-width:359px)");
   if (max359) {
     size = 1;

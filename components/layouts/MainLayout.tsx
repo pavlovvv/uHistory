@@ -13,7 +13,6 @@ import Link from "next/dist/client/link";
 import { ClickAwayListener } from "@mui/base";
 import { IMainLayoutProps } from "../../Typescript/interfaces/data";
 
-
 const MainLayout: React.FC<IMainLayoutProps> = ({ children, t }) => {
   const navItems: string[] = [
     "bi-layers",
@@ -83,10 +82,9 @@ const MainLayout: React.FC<IMainLayoutProps> = ({ children, t }) => {
   };
 
   const handleUpdateCurrency = (currency: string): void => {
-    dispatch(updateCurrency({currency}))
+    dispatch(updateCurrency({ currency }));
     setCurrencyOpen(false);
-  }
-
+  };
 
   return (
     <>
@@ -114,28 +112,28 @@ const MainLayout: React.FC<IMainLayoutProps> = ({ children, t }) => {
                   <div style={{ width: "100%" }} key={i}>
                     {i !== navItems.length - 1 ? (
                       <Link href={linkItems[i]} passHref>
-                      <div
-                        className={s.right__navItem}
-                        style={
-                          router.pathname.includes(linkItems[i])
-                            ? {
-                                cursor: "pointer",
-                                background: "rgba(188, 217, 255, 0.2)",
+                        <div
+                          className={s.right__navItem}
+                          style={
+                            router.pathname.includes(linkItems[i])
+                              ? {
+                                  cursor: "pointer",
+                                  background: "rgba(188, 217, 255, 0.2)",
+                                }
+                              : { cursor: "pointer" }
+                          }
+                        >
+                          <div className={s.right__navItemInner}>
+                            <i
+                              className={`bi ${e}`}
+                              style={
+                                max500
+                                  ? { fontSize: "15px", color: "#bcd9ff" }
+                                  : { fontSize: "23px", color: "#bcd9ff" }
                               }
-                            : { cursor: "pointer" }
-                        }
-                      >
-                        <div className={s.right__navItemInner}>
-                          <i
-                            className={`bi ${e}`}
-                            style={
-                              max500
-                                ? { fontSize: "15px", color: "#bcd9ff" }
-                                : { fontSize: "23px", color: "#bcd9ff" }
-                            }
-                          />
+                            />
+                          </div>
                         </div>
-                      </div>
                       </Link>
                     ) : (
                       <div
@@ -145,10 +143,10 @@ const MainLayout: React.FC<IMainLayoutProps> = ({ children, t }) => {
                           !anchorEl
                             ? { cursor: "pointer" }
                             : {
-                              cursor: "pointer",
-                              background: "rgba(188, 217, 255, 0.2)",
-                            }
-                            }
+                                cursor: "pointer",
+                                background: "rgba(188, 217, 255, 0.2)",
+                              }
+                        }
                       >
                         <div className={s.right__navItemInner}>
                           <i
@@ -188,7 +186,7 @@ const MainLayout: React.FC<IMainLayoutProps> = ({ children, t }) => {
                         <div className={s.popoverContainer}>
                           <div className={s.popover__topInner}>
                             <span className={s.popover__topTitle}>
-                              <b>{t('settings')}</b>
+                              <b>{t("settings")}</b>
                             </span>
                           </div>
                         </div>
@@ -198,59 +196,80 @@ const MainLayout: React.FC<IMainLayoutProps> = ({ children, t }) => {
                         <div className={s.popoverContainer}>
                           <div className={s.popover__center1Inner}>
                             <span className={s.popover__center1Text}>
-                              {t('currency')}:{" "}
+                              {t("currency")}:{" "}
                             </span>
-                              <Box style={{ position: "relative" }}>
-                                <button type='button'
-                                  onClick={handleCurrencyClick}
-                                  className={s.popover__center1Button}
-                                >
-                                  {currency === 'eth' && 'Ethereum'}
-                                  {currency === 'dollar' && 'US Dollar'}
-                                  {currency === 'hryvnia' && t('hryvnia')}
-                                </button>
-                                <ClickAwayListener
-                              mouseEvent="onMouseDown"
-                              touchEvent="onTouchStart"
-                              onClickAway={handleClickAway}
-                            >
-                              <>
-                                {currencyOpen ? (
-                                  <div className={s.popover__currencyInner}>
-                                    <div className={s.popover__currencyItem} onClick={() =>  handleUpdateCurrency('eth')} >
+                            <Box style={{ position: "relative" }}>
+                              <button
+                                type="button"
+                                onClick={handleCurrencyClick}
+                                className={s.popover__center1Button}
+                              >
+                                {currency === "eth" && "Ethereum"}
+                                {currency === "dollar" && "US Dollar"}
+                                {currency === "hryvnia" && t("hryvnia")}
+                              </button>
+                              <ClickAwayListener
+                                mouseEvent="onMouseDown"
+                                touchEvent="onTouchStart"
+                                onClickAway={handleClickAway}
+                              >
+                                <>
+                                  {currencyOpen ? (
+                                    <div className={s.popover__currencyInner}>
                                       <div
-                                        className={
-                                          s.popover__currencyItemContainer
+                                        className={s.popover__currencyItem}
+                                        onClick={() =>
+                                          handleUpdateCurrency("eth")
                                         }
                                       >
-                                        Ethereum
+                                        <div
+                                          className={
+                                            s.popover__currencyItemContainer
+                                          }
+                                        >
+                                          Ethereum
+                                        </div>
                                       </div>
-                                    </div>
-                                    <div className={s.popover__currencyItem} onClick={() => {handleUpdateCurrency('dollar')}} >
                                       <div
-                                        className={
-                                          s.popover__currencyItemContainer
-                                        }
+                                        className={s.popover__currencyItem}
+                                        onClick={() => {
+                                          handleUpdateCurrency("dollar");
+                                        }}
                                       >
-                                        Us dollar
+                                        <div
+                                          className={
+                                            s.popover__currencyItemContainer
+                                          }
+                                        >
+                                          Us dollar
+                                        </div>
                                       </div>
-                                    </div>
-                                    <div className={s.popover__currencyItem} style={{border: 0}} onClick={() => {handleUpdateCurrency('hryvnia')}} >
                                       <div
-                                        className={
-                                          s.popover__currencyItemContainer
-                                        }
+                                        className={s.popover__currencyItem}
+                                        style={{ border: 0 }}
+                                        onClick={() => {
+                                          handleUpdateCurrency("hryvnia");
+                                        }}
                                       >
-                                        {t('hryvnia')}
+                                        <div
+                                          className={
+                                            s.popover__currencyItemContainer
+                                          }
+                                        >
+                                          {t("hryvnia")}
+                                        </div>
                                       </div>
                                     </div>
-                                  </div>
-                                ) : null}
+                                  ) : null}
                                 </>
-                                </ClickAwayListener>
-                              </Box>
-                            
-                           {currencyOpen ? <i className="bi bi-caret-up-fill" /> : <i className="bi bi-caret-down-fill" />}
+                              </ClickAwayListener>
+                            </Box>
+
+                            {currencyOpen ? (
+                              <i className="bi bi-caret-up-fill" />
+                            ) : (
+                              <i className="bi bi-caret-down-fill" />
+                            )}
                           </div>
                         </div>
                       </div>
@@ -259,10 +278,20 @@ const MainLayout: React.FC<IMainLayoutProps> = ({ children, t }) => {
                         <div className={s.popoverContainer}>
                           <div className={s.popover__center2Inner}>
                             <span className={s.popover__center2Text}>
-                              {t('language')}:{" "}
+                              {t("language")}:{" "}
                             </span>
                             <div className={s.popover__center2Languages}>
-                              <Link href={router.pathname} locale="ua">
+                              <Link
+                                href={
+                                  router.pathname !== "/items/[item]"
+                                    ? { pathname: router.pathname }
+                                    : router.pathname.includes("[item]") && {
+                                        pathname: "/items/[item]/",
+                                        query: { item: router.query.item },
+                                      }
+                                }
+                                locale="ua"
+                              >
                                 <a style={{ cursor: "pointer" }}>
                                   <Image
                                     src={UAicon.src}
@@ -272,7 +301,17 @@ const MainLayout: React.FC<IMainLayoutProps> = ({ children, t }) => {
                                   />
                                 </a>
                               </Link>
-                              <Link href={router.pathname} locale="en">
+                              <Link
+                                href={
+                                  router.pathname !== "/items/[item]"
+                                    ? { pathname: router.pathname }
+                                    : router.pathname.includes("[item]") && {
+                                        pathname: "/items/[item]/",
+                                        query: { item: router.query.item },
+                                      }
+                                }
+                                locale="en"
+                              >
                                 <a style={{ cursor: "pointer" }}>
                                   <Image
                                     src={USicon.src}
@@ -302,7 +341,7 @@ const MainLayout: React.FC<IMainLayoutProps> = ({ children, t }) => {
                               className={s.popover__bottomText2}
                               onClick={handleLogOut}
                             >
-                              {t('log_out')}
+                              {t("log_out")}
                             </span>
                           </div>
                         </div>

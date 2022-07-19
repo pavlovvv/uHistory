@@ -67,18 +67,71 @@ export interface IProfileSubmit {
   instagram: string
 }
 
+export interface IItem {
+  id: number
+  name: string
+  rarity: string
+  category: string
+  price: number
+  avatar: string
+  opensea: string
+  QR1: string
+  QR2?: string
+  QR1img: string
+  QR2img?: string 
+  spline: string
+  img2: string
+  img3: string
+  img4: string
+  img4Mobile: string
+  img3Mobile: string
+  description: string[]
+}
+
 export interface IItemProps {
-  item:{
-    id: number
-    name: string
-    rarity: string
-    category: string
-    price: number
-    avatar: string
-    opensea: string
-    qr1: string
-    qr2: string
-    qr1img: string
-    qr2img: string    
+  item: IItem
+  USDCurrency: number
+  USD_ETH: number
+  categoryItems: object[]
+}
+
+export interface IItemHeaderProps {
+  item: IItem
+  USDCurrency: number
+  USD_ETH: number
+  t: (translate: string) => string
+}
+
+export interface IHeaderInfoProps {
+  item: IItem, 
+  rarityColor: string 
+  categoryColor: string 
+  dollarOne: number
+  hryvniaOne: number
+  t: (translate: string) => string
+}
+
+export interface IHeaderDescriptionProps {
+  description: string[]
+  t: (translate: string) => string
+}
+
+export interface IHeaderRightElProps {
+  QR: string
+  QRimg: string
+}
+
+export interface IItemGetServerSideProps {
+  params: {
+    item: number
   }
+  locale: string
+}
+
+export interface IItemBottomProps {
+  USDCurrency: number
+  USD_ETH: number
+  categoryItems: object[]
+  id: number
+  t: (translate: string) => string
 }
