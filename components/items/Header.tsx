@@ -14,8 +14,10 @@ import openSeaIcon from "../../public/images/opensea.png";
 import s from "../../styles/item.module.css";
 import {
   IHeaderRightElProps,
-  IItemHeaderProps
+  IItemHeaderProps,
 } from "./../../Typescript/interfaces/data";
+import { likeItem } from "../../redux/signSlice";
+import { useAppSelector, useAppDispatch } from "../../Typescript/redux-hooks";
 
 const Header: React.FC<IItemHeaderProps> = ({
   item,
@@ -29,9 +31,13 @@ const Header: React.FC<IItemHeaderProps> = ({
   const backgroundRight = setHeaderRightBackground(item.rarity);
 
   const router = useRouter();
+  const dispatch = useAppDispatch();
 
   const dollarOne = Math.round(item.price * USD_ETH);
   const hryvniaOne = Math.round(item.price * USD_ETH * USDCurrency);
+
+  const likedArr = useAppSelector((state) => state.sign.likedArr);
+  const isPending = useAppSelector((state) => state.sign.isPending);
 
   const [activeHeaderStep, setActiveHeaderStep] = useState<number>(0);
 
@@ -104,6 +110,10 @@ const Header: React.FC<IItemHeaderProps> = ({
     ];
   }
 
+  const handleLikeItem = (id: number): void => {
+    dispatch(likeItem({ id }));
+  };
+
   return (
     <section className={s.item__header}>
       <div
@@ -131,15 +141,34 @@ const Header: React.FC<IItemHeaderProps> = ({
 
         <div className={s.item__headerLeftUtils}>
           <div className={s.item__headerLeftUtilsTop}>
-            <i
-              className="bi bi-heart"
-              style={{
-                fontSize: "45px",
-                color: "#fff",
-                cursor: "pointer",
+            <button
+              className={s.left__categoryItemFooterButton}
+              onClick={(el) => {
+                el.preventDefault();
+                !isPending && handleLikeItem(item.id);
               }}
-            />
-            <Link href="https://opensea.io/uHistory" passHref>
+            >
+              {!likedArr.includes(item.id) ? (
+                <i
+                  className="bi bi-heart"
+                  style={{
+                    fontSize: "45px",
+                    color: "#fff",
+                    cursor: "pointer",
+                  }}
+                />
+              ) : (
+                <i
+                  className="bi bi-heart-fill"
+                  style={{
+                    fontSize: "45px",
+                    color: "#fff",
+                    cursor: "pointer",
+                  }}
+                />
+              )}
+            </button>
+            <Link href={item.opensea} passHref>
               <a target="_blank" style={{ minWidth: "50px" }}>
                 <Image
                   src={openSeaIcon.src}

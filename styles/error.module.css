@@ -1,0 +1,52 @@
+.errorPage{
+    width: 100%;
+    height: 100vh;
+    background-image: url('../public/images/bgMain.png');
+    background-repeat: no-repeat;
+    background-size:cover;
+    overflow: hidden;
+}
+
+.errorPage__text {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    row-gap: 40px;
+    color: #fff;
+    font-family: 'Candara';
+    font-weight: 300;
+    font-size: 50px;
+    height: 100%;
+    text-align: center;
+}
+
+.errorPage__button {
+    color: #fff;
+    font-family: 'Candara';
+    font-weight: 300;
+    font-size: 30px;
+    padding: 15px;
+    border: 1px #fff solid;
+    border-radius: 10px;
+}
+
+@media (max-width: 950px) {
+    .errorPage__text {
+        font-size: 30px;
+    }
+
+    .errorPage__button {
+        font-size: 20px;
+    }
+}
+
+@media (max-width: 550px) {
+    .errorPage__text {
+        font-size: 20px;
+    }
+
+    .errorPage__button {
+        font-size: 17px;
+    }
+}

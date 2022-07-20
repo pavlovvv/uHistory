@@ -10,14 +10,14 @@ import setBackground from "./../other/setBackground";
 import MainLayout from "../components/layouts/MainLayout";
 import Link from "next/dist/client/link";
 import { useMediaQuery } from "@mui/material";
-import { useAppSelector } from "../Typescript/redux-hooks";
+import { useAppSelector, useAppDispatch } from "../Typescript/redux-hooks";
 import { ILocale, IMainProps } from "../Typescript/interfaces/data";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import { useTranslation } from "react-i18next";
-import { IItem } from './../Typescript/interfaces/data';
+import { IItem } from "./../Typescript/interfaces/data";
+import { likeItem } from "../redux/signSlice";
 
 export async function getStaticProps({ locale }: ILocale) {
-
   const res1 = await fetch(
     "https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange?json"
   );
@@ -26,7 +26,7 @@ export async function getStaticProps({ locale }: ILocale) {
     `https://uhistoryapi.herokuapp.com/items/getItems`
   );
 
-  const items = await resItems.json()
+  const items = await resItems.json();
 
   const res2 = await fetch(
     "https://min-api.cryptocompare.com/data/pricemulti?fsyms=ETH,DASH&tsyms=BTC,USD,EUR&api_key=aae069f982b821a9a7f904b5e57a8b14ce233552a23feaf832ca61aa9e533f45"
@@ -52,14 +52,13 @@ export async function getStaticProps({ locale }: ILocale) {
 }
 
 const Main: React.FC<IMainProps> = (props) => {
-
   const identities = props.items.filter((e: IItem) => {
-    return e.category === 'Identities'
-  })
+    return e.category === "Identities";
+  });
 
   const weapons = props.items.filter((e: IItem) => {
-    return e.category === 'Weapons'
-  })
+    return e.category === "Weapons";
+  });
 
   const subarray = [];
   const subWeaponsArray = [];
@@ -107,6 +106,7 @@ const Main: React.FC<IMainProps> = (props) => {
   const [activeStep, setActiveStep] = useState<number>(0);
   const [activeCategory2Step, setActiveCategory2Step] = useState<number>(0);
   const maxSteps = subarray.length;
+  const maxCategorySteps = subWeaponsArray.length;
 
   const handleNext = (): void => {
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
@@ -134,9 +134,17 @@ const Main: React.FC<IMainProps> = (props) => {
 
   const name = useAppSelector((state) => state.sign.name);
   const currency = useAppSelector((state) => state.sign.currency);
+  const likedArr = useAppSelector((state) => state.sign.likedArr);
+  const isPending = useAppSelector((state) => state.sign.isPending);
 
   const { t } = useTranslation("main");
   const st = useTranslation("settings").t;
+
+  const dispatch = useAppDispatch();
+
+  const handleLikeItem = (id: number): void => {
+    dispatch(likeItem({ id }));
+  };
 
   return (
     <MainLayout t={st}>
@@ -149,7 +157,10 @@ const Main: React.FC<IMainProps> = (props) => {
           <section className={s.left__category}>
             <div className={s.categoryContainer}>
               <h4 className={s.left__categoryTitle}>{t("identities")}</h4>
-              <Link href="https://opensea.io/collection/uhistory?search[stringTraits][0][name]=Category&search[stringTraits][0][values][0]=Identities&search[sortAscending]=true&search[sortBy]=PRICE" passHref>
+              <Link
+                href="https://opensea.io/collection/uhistory?search[stringTraits][0][name]=Category&search[stringTraits][0][values][0]=Identities&search[sortAscending]=true&search[sortBy]=PRICE"
+                passHref
+              >
                 <a target="_blank">
                   <Image
                     src={openSeaIcon.src}
@@ -203,14 +214,33 @@ const Main: React.FC<IMainProps> = (props) => {
                                 </div>
 
                                 <div className={s.left__categoryItemFooter}>
-                                  <i
-                                    className="bi bi-heart"
-                                    style={{
-                                      fontSize: "20px",
-                                      color: "#fff",
-                                      cursor: "pointer",
+                                  <button
+                                    className={s.left__categoryItemFooterButton}
+                                    onClick={(el) => {
+                                      el.preventDefault();
+                                      !isPending && handleLikeItem(e.id);
                                     }}
-                                  />
+                                  >
+                                    {!likedArr.includes(e.id) ? (
+                                      <i
+                                        className="bi bi-heart"
+                                        style={{
+                                          fontSize: "20px",
+                                          color: "#fff",
+                                          cursor: "pointer",
+                                        }}
+                                      />
+                                    ) : (
+                                      <i
+                                        className="bi bi-heart-fill"
+                                        style={{
+                                          fontSize: "20px",
+                                          color: "#fff",
+                                          cursor: "pointer",
+                                        }}
+                                      />
+                                    )}
+                                  </button>
                                   <div
                                     className={s.left__categoryItemFooterRarity}
                                     style={{ background: bgColor }}
@@ -286,7 +316,10 @@ const Main: React.FC<IMainProps> = (props) => {
           <section className={s.left__category}>
             <div className={s.categoryContainer}>
               <h4 className={s.left__categoryTitle}>{t("weapons")}</h4>
-              <Link href="https://opensea.io/collection/uhistory?search[sortAscending]=true&search[sortBy]=PRICE&search[stringTraits][0][name]=Category&search[stringTraits][0][values][0]=Weapons" passHref>
+              <Link
+                href="https://opensea.io/collection/uhistory?search[sortAscending]=true&search[sortBy]=PRICE&search[stringTraits][0][name]=Category&search[stringTraits][0][values][0]=Weapons"
+                passHref
+              >
                 <a target="_blank">
                   <Image
                     src={openSeaIcon.src}
@@ -340,14 +373,33 @@ const Main: React.FC<IMainProps> = (props) => {
                                 </div>
 
                                 <div className={s.left__categoryItemFooter}>
-                                  <i
-                                    className="bi bi-heart"
-                                    style={{
-                                      fontSize: "20px",
-                                      color: "#fff",
-                                      cursor: "pointer",
+                                  <button
+                                    className={s.left__categoryItemFooterButton}
+                                    onClick={(el) => {
+                                      el.preventDefault();
+                                      !isPending && handleLikeItem(e.id);
                                     }}
-                                  />
+                                  >
+                                    {!likedArr.includes(e.id) ? (
+                                      <i
+                                        className="bi bi-heart"
+                                        style={{
+                                          fontSize: "20px",
+                                          color: "#fff",
+                                          cursor: "pointer",
+                                        }}
+                                      />
+                                    ) : (
+                                      <i
+                                        className="bi bi-heart-fill"
+                                        style={{
+                                          fontSize: "20px",
+                                          color: "#fff",
+                                          cursor: "pointer",
+                                        }}
+                                      />
+                                    )}
+                                  </button>
                                   <div
                                     className={s.left__categoryItemFooterRarity}
                                     style={{ background: bgColor }}
@@ -404,7 +456,7 @@ const Main: React.FC<IMainProps> = (props) => {
               <button
                 className={s.left__categoryItemsButtonRight}
                 onClick={handleCategory2Next}
-                disabled={activeCategory2Step === maxSteps - 1}
+                disabled={activeCategory2Step === maxCategorySteps - 1}
               >
                 <i
                   className="bi bi-arrow-right"
@@ -417,6 +469,95 @@ const Main: React.FC<IMainProps> = (props) => {
                   }
                 />
               </button>
+            </div>
+          </section>
+
+          <section className={s.left__category}>
+            <div className={s.categoryContainer}>
+              <h4 className={s.left__categoryTitle}>Smart Contracts</h4>
+              <Link
+                href="https://opensea.io/assets/matic/0x2953399124f0cbb46d2cbacd8a89cf0599974963/15079132611063179377080374112112344216381780960247741644635325423886218035300/"
+                passHref
+              >
+                <a target="_blank">
+                  <Image
+                    src={openSeaIcon.src}
+                    width="50px"
+                    height="50px"
+                    alt="uHistory_opensea"
+                  />
+                </a>
+              </Link>
+            </div>
+
+            <div className={s.left__categoryItems}>
+              <div className={s.categoryItemsContainer}>
+                <Link href={`/ARContract`} passHref>
+                  <a target="_blank">
+                    <div
+                      className={s.left__categoryItem}
+                      style={{
+                        backgroundImage: `url('https://cat-talk-s3.s3.eu-central-1.amazonaws.com/2022-07-19T21-07-57.887Zimg1Mobile.png?imwidth=64)`,
+                      }}
+                    >
+                      <div className={s.left__categoryItemName}>
+                        AR Contract
+                      </div>
+
+                      <div className={s.left__categoryItemFooter}>
+                        <div
+                          className={s.left__categoryItemFooterRarity}
+                          style={{
+                            background:
+                              "linear-gradient(45deg, rgba(225,193,21,1) 0%, rgba(227,213,119,1) 100%)",
+                          }}
+                        >
+                          L
+                        </div>
+                        <div className={s.left__categoryItemFooterCost}>
+                          {currency === "eth" && (
+                            <>
+                              <Image
+                                src={ethereumIcon.src}
+                                width="11px"
+                                height="19px"
+                                alt="uHistory eth"
+                              />
+                              <span>0.5</span>
+                            </>
+                          )}
+                          {currency === "dollar" && (
+                            <>
+                              <Image
+                                src={dollarIcon.src}
+                                width="11px"
+                                height="19px"
+                                alt="uHistory dollar"
+                              />
+                              <span>{Math.round(0.5 * props.USD_ETH)}</span>
+                            </>
+                          )}
+                          {currency === "hryvnia" && (
+                            <>
+                              <Image
+                                src={hryvniaIcon.src}
+                                width="11px"
+                                height="19px"
+                                alt="uHistory hryvnia"
+                              />
+                              <span>
+                                {Math.round(
+                                  0.5 * props.USD_ETH * props.USDCurrency
+                                )}
+                              </span>
+                            </>
+                          )}
+                        </div>
+                      </div>
+                    </div>
+                  </a>
+                </Link>
+              </div>
             </div>
           </section>
         </div>

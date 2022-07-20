@@ -75,6 +75,13 @@ const HeaderInfo: React.FC<IHeaderInfoProps> = ({
           )}
         </span>
       </div>
+      <div className={s.item__headerLeftInfoEl}>
+        {t("owner")}:{" "}
+
+            <span style={{color: '#bcd9ff'}}>
+          {item.owner}
+          </span>
+      </div>
     </>
   );
 };

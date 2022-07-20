@@ -87,6 +87,7 @@ export interface IItem {
   img4Mobile: string
   img3Mobile: string
   description: string[]
+  owner: string
 }
 
 export interface IItemProps {
@@ -135,4 +136,15 @@ export interface IItemBottomProps {
   categoryItems: object[]
   id: number
   t: (translate: string) => string
+}
+
+export interface IARContractProps {
+  USDCurrency: number
+  USD_ETH: number
+}
+
+export interface ILikedProps {
+  items: object[]
+  USDCurrency: number
+  USD_ETH: number
 }

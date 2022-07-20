@@ -134,6 +134,28 @@ export const updateCurrency = createAsyncThunk<
   dispatch(getOwnInfo());
 });
 
+
+export interface ILikeItem {
+  id: number;
+}
+
+export const likeItem = createAsyncThunk<
+  void,
+  ILikeItem,
+  { dispatch: AppDispatch }
+>("sign/updateCurrency", async function ({ id }, { dispatch }) {
+
+  dispatch(setPending(true));
+
+  dispatch(likeItemArr(id))
+
+  const response = await API.signAPI.likeItem(id);
+
+  await dispatch(getOwnInfo());
+  dispatch(setPending(false));
+});
+
+
 interface ISetUser {
   id: number;
   name: string;
@@ -146,6 +168,7 @@ interface ISetUser {
   watched: number
   registration_date: Date
   avatar: number
+  likedArr: number[]
 }
 
 type StringOrNull = string | null;
@@ -174,6 +197,7 @@ interface ISignState {
     liked: number
     watched: number
   }
+  likedArr: number[]
 }
 
 const initialState: ISignState = {
@@ -199,7 +223,8 @@ const initialState: ISignState = {
   stats: {
     liked: 0,
     watched: 0
-  }
+  },
+  likedArr: []
 };
 
 const signSlice = createSlice({
@@ -253,12 +278,25 @@ const signSlice = createSlice({
       state.links.instagram = action.payload.instagram;
       state.stats.liked = action.payload.liked;
       state.stats.watched = action.payload.watched;
+      state.likedArr = action.payload.likedArr;
       state.isAuthed = true;
       state.isAuthFulfilled = true;
     },
 
     refreshComponent(state) {
       state.key++;
+    },
+
+    likeItemArr(state, action: PayloadAction<number>) {
+        if (state.likedArr.includes(action.payload)) {
+          state.likedArr = state.likedArr.filter((e) => {
+            return e !== action.payload
+          })
+        }
+
+        else {
+          state.likedArr.push(action.payload)
+        }
     },
 
     setAuthFulfilled(state, action: PayloadAction<boolean>) {
@@ -279,6 +317,7 @@ export const {
   setUser,
   setAuthFulfilled,
   refreshComponent,
+  likeItemArr
 } = signSlice.actions;
 
 export default signSlice.reducer;

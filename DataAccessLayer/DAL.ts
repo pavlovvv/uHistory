@@ -38,6 +38,11 @@ export const API = {
         updateCurrency: (currency: string) => {
             return instance.put(`auth/updateCurrency`, {currency})
                 .then(response => response)
+        },
+
+        likeItem: (id: number) => {
+            return instance.post(`items/like`, {id})
+                .then(response => response)
         }
     },
 

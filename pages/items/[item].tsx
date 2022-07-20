@@ -10,6 +10,8 @@ import MainLayout from "../../components/layouts/MainLayout";
 import s from "../../styles/item.module.css";
 import { IItemGetServerSideProps } from "../../Typescript/interfaces/data";
 import { IItemProps } from "./../../Typescript/interfaces/data";
+import { useRouter } from "next/dist/client/router";
+import { useEffect } from "react";
 
 export async function getServerSideProps({
   params,
@@ -61,6 +63,14 @@ const Item: React.FC<IItemProps> = ({
   USDCurrency,
   categoryItems,
 }) => {
+  const router = useRouter();
+
+  useEffect(() => {
+    if (!item.id) {
+      router.push("/404");
+    }
+  }, [item]);
+
   const st = useTranslation("settings").t;
   const { t } = useTranslation("item");
 
@@ -137,63 +147,80 @@ const Item: React.FC<IItemProps> = ({
   ];
 
   return (
-    <MainLayout t={st}>
-      <main className={s.itemPage}>
-        <div className={s.container}>
-          <Header
-            item={item}
-            USD_ETH={USD_ETH}
-            USDCurrency={USDCurrency}
-            t={t}
-          />
+    <>
+      {item.id ? (
+        <MainLayout t={st}>
+          <main className={s.itemPage}>
+            <div className={s.container}>
+              <Header
+                item={item}
+                USD_ETH={USD_ETH}
+                USDCurrency={USDCurrency}
+                t={t}
+              />
 
-          <section className={s.item__frames} style={{position: 'relative'}}>
-            <SwipeableViews
-              index={activeMainStep}
-              onChangeIndex={handleMainStepChange}
-              enableMouseEvents
-            >
-              {MainItems.map((e, i) =>
-                e.map((e, i) => (
-                  <div key={activeMainStep} className={s.item__frame}>
-                    {e}
-                  </div>
-                ))
-              )}
-            </SwipeableViews>
-            <div
-              className={s.item__changeBtn1}
-              style={activeMainStep === 0 ? { backgroundColor: "#fff" } : {}}
-              onClick={() => handleMainStepChange(0)}
-            />
+              <section
+                className={s.item__frames}
+                style={{ position: "relative" }}
+              >
+                <SwipeableViews
+                  index={activeMainStep}
+                  onChangeIndex={handleMainStepChange}
+                  enableMouseEvents
+                >
+                  {MainItems.map((e, i) =>
+                    e.map((e, i) => (
+                      <div key={activeMainStep} className={s.item__frame}>
+                        {e}
+                      </div>
+                    ))
+                  )}
+                </SwipeableViews>
+                <div
+                  className={s.item__changeBtn1}
+                  style={
+                    activeMainStep === 0 ? { backgroundColor: "#fff" } : {}
+                  }
+                  onClick={() => handleMainStepChange(0)}
+                />
 
-            <div
-              className={s.item__changeBtn2}
-              style={activeMainStep === 1 ? { backgroundColor: "#fff" } : {}}
-              onClick={() => handleMainStepChange(1)}
-            />
-            <div
-              className={s.item__changeBtn3}
-              style={activeMainStep === 2 ? { backgroundColor: "#fff" } : {}}
-              onClick={() => handleMainStepChange(2)}
-            />
-            <div
-              className={s.item__changeBtn4}
-              style={activeMainStep === 3 ? { backgroundColor: "#fff" } : {}}
-              onClick={() => handleMainStepChange(3)}
-            />
-          </section>
+                <div
+                  className={s.item__changeBtn2}
+                  style={
+                    activeMainStep === 1 ? { backgroundColor: "#fff" } : {}
+                  }
+                  onClick={() => handleMainStepChange(1)}
+                />
+                <div
+                  className={s.item__changeBtn3}
+                  style={
+                    activeMainStep === 2 ? { backgroundColor: "#fff" } : {}
+                  }
+                  onClick={() => handleMainStepChange(2)}
+                />
+                <div
+                  className={s.item__changeBtn4}
+                  style={
+                    activeMainStep === 3 ? { backgroundColor: "#fff" } : {}
+                  }
+                  onClick={() => handleMainStepChange(3)}
+                />
+              </section>
 
-          <Bottom
-            id={item.id}
-            USD_ETH={USD_ETH}
-            USDCurrency={USDCurrency}
-            categoryItems={categoryItems}
-            t={t}
-          />
-        </div>
-      </main>
-    </MainLayout>
+              <Bottom
+                id={item.id}
+                USD_ETH={USD_ETH}
+                USDCurrency={USDCurrency}
+                categoryItems={categoryItems}
+                t={t}
+              />
+            </div>
+          </main>
+        </MainLayout>
+      ) : (
+        <div style={{ color: "#fff" }}>Not found</div>
+      )}
+    </>
   );
 };
 
