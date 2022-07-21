@@ -1,7 +1,7 @@
 import { useMediaQuery } from "@mui/material";
 import Image from "next/dist/client/image";
 import Link from "next/dist/client/link";
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 import SwipeableViews from "react-swipeable-views";
 import setBackground from "../../other/setBackground";
 import dollarIcon from "../../public/images/dollar.svg";
@@ -12,7 +12,6 @@ import s2 from "../../styles/main.module.css";
 import { IItem, IItemBottomProps } from "../../Typescript/interfaces/data";
 import { useAppSelector } from "../../Typescript/redux-hooks";
 
-
 const Bottom: React.FC<IItemBottomProps> = ({
   id,
   USD_ETH,
@@ -20,18 +19,20 @@ const Bottom: React.FC<IItemBottomProps> = ({
   categoryItems,
   t,
 }) => {
-
   const [activeCategoryStep, setActiveCategoryStep] = useState<number>(0);
 
   const requiredCategoryItems = categoryItems.filter((e: IItem) => {
     return e.id !== id;
   });
 
-  const [shuffledRequiredCategoryItems, setShuffledRequiredCategoryItems] = useState<object[]>()
+  const [shuffledRequiredCategoryItems, setShuffledRequiredCategoryItems] =
+    useState<object[]>();
 
   useEffect(() => {
-    setShuffledRequiredCategoryItems(requiredCategoryItems.sort(() => Math.random() - 0.5))
-  }, [])
+    setShuffledRequiredCategoryItems(
+      requiredCategoryItems.sort(() => Math.random() - 0.5)
+    );
+  }, []);
 
   const subCategoryArray = [];
   let size = 6;
@@ -57,7 +58,11 @@ const Bottom: React.FC<IItemBottomProps> = ({
   const max359 = useMediaQuery("(max-width:359px)");
   if (max359) size = 1;
 
-  for (let i = 0; i < Math.ceil(shuffledRequiredCategoryItems?.length / size); i++) {
+  for (
+    let i = 0;
+    i < Math.ceil(shuffledRequiredCategoryItems?.length / size);
+    i++
+  ) {
     subCategoryArray[i] = shuffledRequiredCategoryItems?.slice(
       i * size,
       i * size + size

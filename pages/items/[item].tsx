@@ -1,17 +1,18 @@
 import { NoSsr } from "@mui/base";
 import { useMediaQuery } from "@mui/material";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
-import { useState } from "react";
+import { useRouter } from "next/dist/client/router";
+import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import SwipeableViews from "react-swipeable-views";
 import Bottom from "../../components/items/Bottom";
 import Header from "../../components/items/Header";
 import MainLayout from "../../components/layouts/MainLayout";
+import { watchItem } from "../../redux/signSlice";
 import s from "../../styles/item.module.css";
 import { IItemGetServerSideProps } from "../../Typescript/interfaces/data";
+import { useAppDispatch } from "../../Typescript/redux-hooks";
 import { IItemProps } from "./../../Typescript/interfaces/data";
-import { useRouter } from "next/dist/client/router";
-import { useEffect } from "react";
 
 export async function getServerSideProps({
   params,
@@ -64,6 +65,7 @@ const Item: React.FC<IItemProps> = ({
   categoryItems,
 }) => {
   const router = useRouter();
+  const dispatch = useAppDispatch();
 
   useEffect(() => {
     if (!item.id) {
@@ -145,6 +147,10 @@ const Item: React.FC<IItemProps> = ({
     [<ImageObj3 />],
     [<ImageObj4 />],
   ];
+
+  useEffect(() => {
+    dispatch(watchItem({ id: item.id }));
+  }, []);
 
   return (
     <>

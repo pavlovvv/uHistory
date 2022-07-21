@@ -18,7 +18,7 @@ export const updateInfo = createAsyncThunk<
   "profile/updateInfo",
   async function ({ name, email, telegram, instagram }, { dispatch }) {
     try {
-      dispatch(setPending(true))
+      dispatch(setPending(true));
       const response = await API.profileAPI.updateInfo(
         name,
         email,
@@ -26,10 +26,10 @@ export const updateInfo = createAsyncThunk<
         instagram
       );
       dispatch(setSuccess(true));
-      dispatch(setPending(false))
+      dispatch(setPending(false));
       dispatch(getOwnInfo());
     } catch (err) {
-      dispatch(setPending(false))
+      dispatch(setPending(false));
       dispatch(setError("Some error occurred. Try again later"));
     }
   }

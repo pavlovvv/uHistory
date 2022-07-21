@@ -1,9 +1,6 @@
 import Document, {
-  Html,
-  Head,
-  Main,
-  NextScript,
-  DocumentContext,
+  DocumentContext, Head, Html, Main,
+  NextScript
 } from "next/document";
 
 export default class MyDocument extends Document {
@@ -17,7 +14,10 @@ export default class MyDocument extends Document {
     return (
       <Html>
         <Head>
-          <meta name="description" content="Discover, Collect and Learn ukrainian history with WEB 3.0 technologies!" />
+          <meta
+            name="description"
+            content="Discover, Collect and Learn ukrainian history with WEB 3.0 technologies!"
+          />
           <meta
             name="keywords"
             content="uHistory, uhistory, uHistory hataton"
@@ -28,7 +28,10 @@ export default class MyDocument extends Document {
             href="https://fonts.gstatic.com"
             crossOrigin="true"
           />
-<link href="https://fonts.googleapis.com/css2?family=Montserrat&family=Roboto:wght@300&display=swap" rel="stylesheet" /> 
+          <link
+            href="https://fonts.googleapis.com/css2?family=Montserrat&family=Roboto:wght@300&display=swap"
+            rel="stylesheet"
+          />
         </Head>
         <body>
           <Main />

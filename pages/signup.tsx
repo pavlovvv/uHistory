@@ -1,27 +1,37 @@
 import {
-  createTheme, IconButton, InputAdornment, NoSsr,
-  TextField, ThemeProvider, useMediaQuery, CircularProgress,
-  Alert
+  Alert, CircularProgress, createTheme,
+  IconButton,
+  InputAdornment,
+  NoSsr,
+  TextField,
+  ThemeProvider,
+  useMediaQuery
 } from "@mui/material";
 import { styled } from "@mui/material/styles";
 import { useTranslation } from "next-i18next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import Link from "next/dist/client/link";
+import { useRouter } from "next/dist/client/router";
 import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
-import { setSigning } from "../redux/signSlice";
-import s from "../styles/signup.module.css";
-import { IInputPasswordValues, ILocale, ISignUpSubmit } from "../Typescript/interfaces/data";
-import { useAppDispatch, useAppSelector } from "../Typescript/redux-hooks";
 import InitialLayout from "../components/layouts/InitialLayout";
-import { signUp } from "../redux/signSlice";
-import { useRouter } from "next/dist/client/router";
-
+import { setSigning, signUp } from "../redux/signSlice";
+import s from "../styles/signup.module.css";
+import {
+  IInputPasswordValues,
+  ILocale,
+  ISignUpSubmit
+} from "../Typescript/interfaces/data";
+import { useAppDispatch, useAppSelector } from "../Typescript/redux-hooks";
 
 export async function getStaticProps({ locale }: ILocale) {
   return {
     props: {
-      ...(await serverSideTranslations(locale, ["common", "initial", "signup"])),
+      ...(await serverSideTranslations(locale, [
+        "common",
+        "initial",
+        "signup",
+      ])),
     },
   };
 }
@@ -55,28 +65,24 @@ const CustomTextField = styled(TextField)<ICustomTextFieldProps>(
 
 const SignUp: React.FC = () => {
   const dispatch = useAppDispatch();
-  const router = useRouter()
+  const router = useRouter();
 
-  const isPending = useAppSelector(state => state.sign.isPending)
-  const error = useAppSelector(state => state.sign.error)
-  const isRegConfirmed = useAppSelector(state => state.sign.isRegConfirmed)
-  const isAuthed = useAppSelector(state => state.sign.isAuthed)
+  const isPending = useAppSelector((state) => state.sign.isPending);
+  const error = useAppSelector((state) => state.sign.error);
+  const isRegConfirmed = useAppSelector((state) => state.sign.isRegConfirmed);
+  const isAuthed = useAppSelector((state) => state.sign.isAuthed);
 
   const { t } = useTranslation("signup");
   const it = useTranslation("initial").t;
   const ct = useTranslation("common").t;
 
   useEffect(() => {
-
     if (isRegConfirmed) {
-      router.push('/main')
+      router.push("/main");
+    } else if (isAuthed) {
+      router.push("/main");
     }
-
-    else if (isAuthed) {
-      router.push('/main')
-    }
-
-  }, [isRegConfirmed, isAuthed])
+  }, [isRegConfirmed, isAuthed]);
 
   useEffect(() => {
     dispatch(setSigning(true));
@@ -130,28 +136,25 @@ const SignUp: React.FC = () => {
 
   const max500 = useMediaQuery("(max-width:500px)");
 
-  const onSubmit = ({
-    email,
-    password,
-    name
-  }: ISignUpSubmit): void => {
+  const onSubmit = ({ email, password, name }: ISignUpSubmit): void => {
+    const name_surname: string[] = name.split(" ");
 
-    const name_surname: string[] = name.split(' ')
-
-    let str: string = ''
+    let str: string = "";
 
     for (let i = 0; i < name_surname.length; i++) {
-      str = str.concat(name_surname[i].charAt(0).toUpperCase() +
-      name_surname[i].slice(1).toLowerCase())
-      str = str.concat(' ')
+      str = str.concat(
+        name_surname[i].charAt(0).toUpperCase() +
+          name_surname[i].slice(1).toLowerCase()
+      );
+      str = str.concat(" ");
     }
-    str = str.trimEnd()
+    str = str.trimEnd();
 
     dispatch(
       signUp({
         email: email.replace(/\s+/g, "").toLowerCase(),
         password,
-        name: str
+        name: str,
       })
     );
   };
@@ -164,9 +167,11 @@ const SignUp: React.FC = () => {
             <div className={s.container}>
               <div className={s.signupPanel__inner}>
                 <h3 className={s.signupPanel__title}>{t("registration")}</h3>
-                <form onSubmit={handleSubmit(onSubmit)} className={s.signup__form}>
-
-                <div className={s.signup__formSection}>
+                <form
+                  onSubmit={handleSubmit(onSubmit)}
+                  className={s.signup__form}
+                >
+                  <div className={s.signup__formSection}>
                     <label htmlFor="name" className={s.signup__formLabel}>
                       {" "}
                       <i className="bi bi-person" /> {t("your_name")}
@@ -185,9 +190,11 @@ const SignUp: React.FC = () => {
                       }}
                       onChange={handleChange("name")}
                       customcolor={
-                        Number(values.name.length) > 20 
-                        || Number(values.name.length) < 5 
-                        || !values.name.match(/^([A-Za-zА-Яа-яієїґ]{2,}\s[A-Za-zА-Яа-яієїґ]{1,}'?-?[A-Za-zА-Яа-яієїґ]{2,}\s?([A-Za-zА-Яа-яієїґ]{1,})?)/)
+                        Number(values.name.length) > 20 ||
+                        Number(values.name.length) < 5 ||
+                        !values.name.match(
+                          /^([A-Za-zА-Яа-яієїґ]{2,}\s[A-Za-zА-Яа-яієїґ]{1,}'?-?[A-Za-zА-Яа-яієїґ]{2,}\s?([A-Za-zА-Яа-яієїґ]{1,})?)/
+                        )
                           ? "#bcd9ff"
                           : "#94ffa8"
                       }
@@ -203,7 +210,8 @@ const SignUp: React.FC = () => {
                           message: ct("max", { count: 20 }),
                         },
                         pattern: {
-                          value: /^([A-Za-zА-Яа-яієїґ]{2,}\s[A-Za-zА-Яа-яієїґ]{1,}'?-?[A-Za-zА-Яа-яієїґ]{2,}\s?([A-Za-zА-Яа-яієїґ]{1,})?)/,
+                          value:
+                            /^([A-Za-zА-Яа-яієїґ]{2,}\s[A-Za-zА-Яа-яієїґ]{1,}'?-?[A-Za-zА-Яа-яієїґ]{2,}\s?([A-Za-zА-Яа-яієїґ]{1,})?)/,
                           message: ct("invalid_name"),
                         },
                       })}
@@ -252,8 +260,11 @@ const SignUp: React.FC = () => {
                       }}
                       onChange={handleChange("email")}
                       customcolor={
-                        Number(values.email.length) > 35 
-                        || Number(values.email.length) < 8 || !values.email.match(/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]+\s*$/i)
+                        Number(values.email.length) > 35 ||
+                        Number(values.email.length) < 8 ||
+                        !values.email.match(
+                          /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]+\s*$/i
+                        )
                           ? "#bcd9ff"
                           : "#94ffa8"
                       }
@@ -320,9 +331,11 @@ const SignUp: React.FC = () => {
                       onChange={handleChange("password")}
                       helperText={errors.password && errors.password.message}
                       customcolor={
-                        Number(values.password.length) > 25 
-                        ||Number(values.password.length) < 8 
-                        || !values.password.match(/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/)
+                        Number(values.password.length) > 25 ||
+                        Number(values.password.length) < 8 ||
+                        !values.password.match(
+                          /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/
+                        )
                           ? "#bcd9ff"
                           : "#94ffa8"
                       }
@@ -337,9 +350,10 @@ const SignUp: React.FC = () => {
                           message: ct("max", { count: 25 }),
                         },
                         pattern: {
-                          value: /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/,
-                          message: ct("invalid_password")
-                        }
+                          value:
+                            /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/,
+                          message: ct("invalid_password"),
+                        },
                       })}
                       sx={
                         !max500
@@ -388,23 +402,33 @@ const SignUp: React.FC = () => {
                   <div className={s.signup__rules}>
                     <ul>
                       <li className={s.signup__rule}>
-                        - {t("rule1")} <span className={s.signup__ruleBold}>{t("rule1.1")}</span>
+                        - {t("rule1")}{" "}
+                        <span className={s.signup__ruleBold}>
+                          {t("rule1.1")}
+                        </span>
                       </li>
+                      <li className={s.signup__rule}>- {t("rule2")}</li>
+                      <li className={s.signup__rule}>- {t("rule3")}</li>
                       <li className={s.signup__rule}>
-                        - {t("rule2")}
-                      </li>
-                      <li className={s.signup__rule}>
-                        - {t("rule3")}
-                      </li>
-                      <li className={s.signup__rule}>
-                        - {t("rule4")} <span className={s.signup__ruleBold}>{t("rule4.1")}</span>
+                        - {t("rule4")}{" "}
+                        <span className={s.signup__ruleBold}>
+                          {t("rule4.1")}
+                        </span>
                       </li>
                     </ul>
                   </div>
-                  <button className={s.signup__formSubmit} disabled={isPending} type='submit'>
-                      {isPending && (
-                          <CircularProgress size={20} sx={{ color: "#73777B", marginRight: '10px' }} />
-                        )} {t("submit")}
+                  <button
+                    className={s.signup__formSubmit}
+                    disabled={isPending}
+                    type="submit"
+                  >
+                    {isPending && (
+                      <CircularProgress
+                        size={20}
+                        sx={{ color: "#73777B", marginRight: "10px" }}
+                      />
+                    )}{" "}
+                    {t("submit")}
                   </button>
                 </form>
                 <div className={s.signup__newAcc}>
@@ -413,9 +437,11 @@ const SignUp: React.FC = () => {
                     <span className={s.signup__newAccSpan}>{t("login")}</span>
                   </Link>
                 </div>
-                {error &&  <Alert variant="filled" severity="error" sx={{mt: '15px'}}>
+                {error && (
+                  <Alert variant="filled" severity="error" sx={{ mt: "15px" }}>
                     {error}
-               </Alert>}
+                  </Alert>
+                )}
               </div>
             </div>
           </section>

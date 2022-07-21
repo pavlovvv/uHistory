@@ -1,20 +1,29 @@
 import {
-  createTheme, IconButton, InputAdornment, NoSsr,
-  TextField, ThemeProvider, useMediaQuery, Alert, CircularProgress
+  Alert,
+  CircularProgress, createTheme,
+  IconButton,
+  InputAdornment,
+  NoSsr,
+  TextField,
+  ThemeProvider,
+  useMediaQuery
 } from "@mui/material";
 import { styled } from "@mui/material/styles";
 import { useTranslation } from "next-i18next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import Link from "next/dist/client/link";
+import { useRouter } from "next/dist/client/router";
 import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
-import { setSigning } from "../redux/signSlice";
+import { auth, setSigning } from "../redux/signSlice";
 import s from "../styles/login.module.css";
-import { IInputPasswordValues, ILocale, ILoginSubmit } from "../Typescript/interfaces/data";
+import {
+  IInputPasswordValues,
+  ILocale,
+  ILoginSubmit
+} from "../Typescript/interfaces/data";
 import { useAppDispatch, useAppSelector } from "../Typescript/redux-hooks";
 import InitialLayout from "./../components/layouts/InitialLayout";
-import { auth } from "../redux/signSlice";
-import { useRouter } from "next/dist/client/router";
 
 export async function getStaticProps({ locale }: ILocale) {
   return {
@@ -53,12 +62,12 @@ const CustomTextField = styled(TextField)<ICustomTextFieldProps>(
 
 const Login: React.FC = () => {
   const dispatch = useAppDispatch();
-  const router = useRouter()
+  const router = useRouter();
 
-  const isPending = useAppSelector(state => state.sign.isPending)
-  const logInError = useAppSelector(state => state.sign.logInError)
-  const isAuthed = useAppSelector(state => state.sign.isAuthed)
-  const isAuthFulfilled = useAppSelector(state => state.sign.isAuthFulfilled)
+  const isPending = useAppSelector((state) => state.sign.isPending);
+  const logInError = useAppSelector((state) => state.sign.logInError);
+  const isAuthed = useAppSelector((state) => state.sign.isAuthed);
+  const isAuthFulfilled = useAppSelector((state) => state.sign.isAuthFulfilled);
 
   const { t } = useTranslation("login");
   const it = useTranslation("initial").t;
@@ -66,7 +75,7 @@ const Login: React.FC = () => {
 
   useEffect(() => {
     if (isAuthFulfilled && isAuthed) {
-      router.push('/main')
+      router.push("/main");
     }
   }, [isAuthFulfilled, isAuthed]);
 
@@ -121,11 +130,7 @@ const Login: React.FC = () => {
 
   const max500 = useMediaQuery("(max-width:500px)");
 
-  const onSubmit = ({
-    email,
-    password,
-  }: ILoginSubmit): void => {
-
+  const onSubmit = ({ email, password }: ILoginSubmit): void => {
     dispatch(
       auth({
         email: email.replace(/\s+/g, "").toLowerCase(),
@@ -142,7 +147,10 @@ const Login: React.FC = () => {
             <div className={s.container}>
               <div className={s.loginPanel__inner}>
                 <h3 className={s.loginPanel__title}>Login</h3>
-                <form onSubmit={handleSubmit(onSubmit)} className={s.login__form}>
+                <form
+                  onSubmit={handleSubmit(onSubmit)}
+                  className={s.login__form}
+                >
                   <div className={s.login__formSection}>
                     <label htmlFor="email" className={s.login__formLabel}>
                       {" "}
@@ -162,8 +170,11 @@ const Login: React.FC = () => {
                       }}
                       onChange={handleChange("email")}
                       customcolor={
-                        Number(values.email.length) > 35 
-                         || Number(values.email.length) < 8 || !values.email.match(/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]+\s*$/i)
+                        Number(values.email.length) > 35 ||
+                        Number(values.email.length) < 8 ||
+                        !values.email.match(
+                          /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]+\s*$/i
+                        )
                           ? "#bcd9ff"
                           : "#94ffa8"
                       }
@@ -230,9 +241,11 @@ const Login: React.FC = () => {
                       onChange={handleChange("password")}
                       helperText={errors.password && errors.password.message}
                       customcolor={
-                        Number(values.password.length) > 25 
-                        || Number(values.password.length) < 8 
-                        || !values.password.match(/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/)
+                        Number(values.password.length) > 25 ||
+                        Number(values.password.length) < 8 ||
+                        !values.password.match(
+                          /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/
+                        )
                           ? "#bcd9ff"
                           : "#94ffa8"
                       }
@@ -290,10 +303,18 @@ const Login: React.FC = () => {
                       }}
                     />
                   </div>
-                  <button className={s.login__formSubmit} disabled={isPending} type='submit'>
-                      {isPending && (
-                          <CircularProgress size={20} sx={{ color: "#73777B", marginRight: '10px' }} />
-                        )} {t("submit")}
+                  <button
+                    className={s.login__formSubmit}
+                    disabled={isPending}
+                    type="submit"
+                  >
+                    {isPending && (
+                      <CircularProgress
+                        size={20}
+                        sx={{ color: "#73777B", marginRight: "10px" }}
+                      />
+                    )}{" "}
+                    {t("submit")}
                   </button>
                 </form>
                 <div className={s.login__newAcc}>
@@ -302,9 +323,11 @@ const Login: React.FC = () => {
                     <span className={s.login__newAccSpan}>{t("reg")}</span>
                   </Link>
                 </div>
-                {logInError &&  <Alert variant="filled" severity="error" sx={{mt: '15px'}}>
+                {logInError && (
+                  <Alert variant="filled" severity="error" sx={{ mt: "15px" }}>
                     {logInError}
-               </Alert>}
+                  </Alert>
+                )}
               </div>
             </div>
           </section>

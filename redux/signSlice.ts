@@ -1,10 +1,11 @@
+import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import {
-  createAsyncThunk, createSlice, PayloadAction
-} from "@reduxjs/toolkit";
-import {
-  createUserWithEmailAndPassword, getAuth, signInWithEmailAndPassword
+  createUserWithEmailAndPassword,
+  getAuth,
+  signInWithEmailAndPassword
 } from "firebase/auth";
 import { API } from "../DataAccessLayer/DAL";
+import { IWatchedArr } from "./../Typescript/interfaces/data";
 import { AppDispatch } from "./store";
 
 export interface ISignUp {
@@ -134,7 +135,6 @@ export const updateCurrency = createAsyncThunk<
   dispatch(getOwnInfo());
 });
 
-
 export interface ILikeItem {
   id: number;
 }
@@ -144,10 +144,9 @@ export const likeItem = createAsyncThunk<
   ILikeItem,
   { dispatch: AppDispatch }
 >("sign/updateCurrency", async function ({ id }, { dispatch }) {
-
   dispatch(setPending(true));
 
-  dispatch(likeItemArr(id))
+  dispatch(likeItemArr(id));
 
   const response = await API.signAPI.likeItem(id);
 
@@ -155,6 +154,21 @@ export const likeItem = createAsyncThunk<
   dispatch(setPending(false));
 });
 
+export interface IWatchItem {
+  id: number;
+}
+
+export const watchItem = createAsyncThunk<
+  void,
+  IWatchItem,
+  { dispatch: AppDispatch }
+>("sign/updateCurrency", async function ({ id }, { dispatch }) {
+  const date = new Date();
+
+  const response = await API.signAPI.watchItem(id, date);
+
+  dispatch(getOwnInfo())
+});
 
 interface ISetUser {
   id: number;
@@ -162,13 +176,14 @@ interface ISetUser {
   email: string;
   type: string;
   currency: string;
-  telegram: string
-  instagram: string
-  liked: number
-  watched: number
-  registration_date: Date
-  avatar: number
-  likedArr: number[]
+  telegram: string;
+  instagram: string;
+  liked: number;
+  watched: number;
+  registration_date: Date;
+  avatar: number;
+  likedArr: number[];
+  watchedArr: IWatchedArr[];
 }
 
 type StringOrNull = string | null;
@@ -187,17 +202,18 @@ interface ISignState {
   isRegConfirmed: boolean;
   currency: StringOrNull;
   key: number;
-  avatar: number
-  registration_date: Date | null
+  avatar: number;
+  registration_date: Date | null;
   links: {
-    telegram: StringOrNull
-    instagram: StringOrNull
-  }
+    telegram: StringOrNull;
+    instagram: StringOrNull;
+  };
   stats: {
-    liked: number
-    watched: number
-  }
-  likedArr: number[]
+    liked: number;
+    watched: number;
+  };
+  likedArr: number[];
+  watchedArr: IWatchedArr[];
 }
 
 const initialState: ISignState = {
@@ -218,13 +234,14 @@ const initialState: ISignState = {
   registration_date: null,
   links: {
     telegram: null,
-    instagram: null
+    instagram: null,
   },
   stats: {
     liked: 0,
-    watched: 0
+    watched: 0,
   },
-  likedArr: []
+  likedArr: [],
+  watchedArr: [],
 };
 
 const signSlice = createSlice({
@@ -279,6 +296,7 @@ const signSlice = createSlice({
       state.stats.liked = action.payload.liked;
       state.stats.watched = action.payload.watched;
       state.likedArr = action.payload.likedArr;
+      state.watchedArr = action.payload.watchedArr;
       state.isAuthed = true;
       state.isAuthFulfilled = true;
     },
@@ -288,15 +306,13 @@ const signSlice = createSlice({
     },
 
     likeItemArr(state, action: PayloadAction<number>) {
-        if (state.likedArr.includes(action.payload)) {
-          state.likedArr = state.likedArr.filter((e) => {
-            return e !== action.payload
-          })
-        }
-
-        else {
-          state.likedArr.push(action.payload)
-        }
+      if (state.likedArr.includes(action.payload)) {
+        state.likedArr = state.likedArr.filter((e) => {
+          return e !== action.payload;
+        });
+      } else {
+        state.likedArr.push(action.payload);
+      }
     },
 
     setAuthFulfilled(state, action: PayloadAction<boolean>) {
@@ -317,7 +333,7 @@ export const {
   setUser,
   setAuthFulfilled,
   refreshComponent,
-  likeItemArr
+  likeItemArr,
 } = signSlice.actions;
 
 export default signSlice.reducer;

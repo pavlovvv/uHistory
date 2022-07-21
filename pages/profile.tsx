@@ -1,6 +1,11 @@
 import {
   Alert,
-  CircularProgress, createTheme, styled, TextField, ThemeProvider, useMediaQuery
+  CircularProgress,
+  createTheme,
+  styled,
+  TextField,
+  ThemeProvider,
+  useMediaQuery
 } from "@mui/material";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import Link from "next/dist/client/link";
@@ -109,7 +114,7 @@ const Profile: React.FC = () => {
   const isPending = useAppSelector((state) => state.profile.isPending);
 
   if (registration_date !== null) {
-    const date = new Date(registration_date);
+    const date: any = new Date(registration_date);
     var year = date.getFullYear();
     var month = date.getMonth() + 1;
     var day = date.getDate();
@@ -736,10 +741,7 @@ const Profile: React.FC = () => {
                     </a>
                   </Link>
 
-                  <Link
-                    href="https://twitter.com/i/lists/1546545585632706561?t=rmbtytn7S4n_CSqhg67Z_A&s=09"
-                    passHref
-                  >
+                  <Link href="https://twitter.com/uhistorynft" passHref>
                     <a target="_blank">
                       <i
                         className={"bi bi-twitter" + " " + s.iconOnHover}

@@ -1,18 +1,18 @@
-import MainLayout from "../components/layouts/MainLayout";
-import { ILikedProps, ILocale, IItem } from "../Typescript/interfaces/data";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
+import Image from "next/dist/client/image";
+import Link from "next/dist/client/link";
+import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
+import MainLayout from "../components/layouts/MainLayout";
+import setBackground from "../other/setBackground";
+import dollarIcon from "../public/images/dollar.svg";
+import ethereumIcon from "../public/images/ethereum.svg";
+import hryvniaIcon from "../public/images/hryvnia.svg";
+import { likeItem } from "../redux/signSlice";
 import s from "../styles/liked.module.css";
 import s2 from "../styles/main.module.css";
-import { useAppSelector, useAppDispatch } from "../Typescript/redux-hooks";
-import { useState, useEffect } from "react";
-import setBackground from "../other/setBackground";
-import Link from "next/dist/client/link";
-import { likeItem } from "../redux/signSlice";
-import Image from "next/dist/client/image";
-import hryvniaIcon from "../public/images/hryvnia.svg";
-import ethereumIcon from "../public/images/ethereum.svg";
-import dollarIcon from "../public/images/dollar.svg";
+import { IItem, ILikedProps, ILocale } from "../Typescript/interfaces/data";
+import { useAppDispatch, useAppSelector } from "../Typescript/redux-hooks";
 
 export async function getStaticProps({ locale }: ILocale) {
   const resItems = await fetch(
@@ -62,7 +62,7 @@ const Liked: React.FC<ILikedProps> = (props) => {
   const currency = useAppSelector((state) => state.sign.currency);
   const isPending = useAppSelector((state) => state.sign.isPending);
 
-  const [filteredItems, setFilteredItems] = useState<any>(null);
+  const [filteredItems, setFilteredItems] = useState<object[]>(null);
 
   useEffect(() => {
     if (isAuthFulfilled) {
@@ -210,7 +210,9 @@ const Liked: React.FC<ILikedProps> = (props) => {
                       })}
                     </>
                   ) : (
-                    <div className={s.liked__mainItemsNotLiked}>{t("not_liked")}</div>
+                    <div className={s.liked__mainItemsNotLiked}>
+                      {t("not_liked")}
+                    </div>
                   )}
                 </div>
               </div>

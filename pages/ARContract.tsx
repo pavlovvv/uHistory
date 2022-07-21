@@ -99,7 +99,7 @@ const ARContract: React.FC<IARContractProps> = ({ USD_ETH, USDCurrency }) => {
           className={s.item__headerLeftInfoEl}
           style={!max500 ? { fontSize: "22px" } : { fontSize: "19px" }}
         >
-          {t('category')}:{" "}
+          {t("category")}:{" "}
           <span
             style={{
               backgroundImage:
@@ -302,7 +302,10 @@ const ARContract: React.FC<IARContractProps> = ({ USD_ETH, USDCurrency }) => {
 
               <div className={s.item__headerLeftUtils}>
                 <div className={s.item__headerLeftUtilsTop}>
-                  <Link href="https://opensea.io/assets/matic/0x2953399124f0cbb46d2cbacd8a89cf0599974963/15079132611063179377080374112112344216381780960247741644635325423886218035300" passHref>
+                  <Link
+                    href="https://opensea.io/assets/matic/0x2953399124f0cbb46d2cbacd8a89cf0599974963/15079132611063179377080374112112344216381780960247741644635325423886218035300"
+                    passHref
+                  >
                     <a target="_blank" style={{ minWidth: "50px" }}>
                       <Image
                         src={openSeaIcon.src}

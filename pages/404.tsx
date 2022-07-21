@@ -1,17 +1,36 @@
-import s from '../styles/error.module.css'
-import Link from 'next/dist/client/link'
+import Link from "next/dist/client/link";
+import s from "../styles/error.module.css";
+import { ILocale } from "../Typescript/interfaces/data";
+import { serverSideTranslations } from "next-i18next/serverSideTranslations";
+import { useTranslation } from "react-i18next";
 
-
-const ErrorComponent: React.FC = () => {
-    return (
-        <div className={s.errorPage}>
-          <div className={s.errorPage__text}>
-                This page is unavailable or in developing
-
-                <div className={s.errorPage__button}><Link href='/' passHref> Return back </Link></div>
-          </div>
-        </div>
-    )
+export async function getStaticProps({ locale }: ILocale) {
+  return {
+    props: {
+      ...(await serverSideTranslations(locale, [
+        "common",
+        "error",
+      ])),
+    },
+  };
 }
 
-export default ErrorComponent
+const ErrorComponent: React.FC = () => {
+
+  const { t } = useTranslation('error')
+
+  return (
+    <div className={s.errorPage}>
+      <div className={s.errorPage__text}>
+        {t('unavailable')}
+        <div className={s.errorPage__button}>
+          <Link href="/" passHref>
+            {t('return')}         
+          </Link>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default ErrorComponent;

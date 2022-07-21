@@ -1,17 +1,16 @@
-import React from "react";
-import { CircularProgress, useMediaQuery, Popover, Box } from "@mui/material";
+import { ClickAwayListener } from "@mui/base";
+import { Box, CircularProgress, Popover, useMediaQuery } from "@mui/material";
 import Image from "next/dist/client/image";
+import Link from "next/dist/client/link";
 import { useRouter } from "next/dist/client/router";
-import { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
+import uHistoryIcon from "../../public/images/logo_blue.png";
 import UAicon from "../../public/images/UAIcon.png";
 import USicon from "../../public/images/USIcon.png";
-import uHistoryIcon from "../../public/images/logo_blue.png";
 import { getOwnInfo, logOut, updateCurrency } from "../../redux/signSlice";
 import s from "../../styles/mainlayout.module.css";
-import { useAppDispatch, useAppSelector } from "../../Typescript/redux-hooks";
-import Link from "next/dist/client/link";
-import { ClickAwayListener } from "@mui/base";
 import { IMainLayoutProps } from "../../Typescript/interfaces/data";
+import { useAppDispatch, useAppSelector } from "../../Typescript/redux-hooks";
 
 const MainLayout: React.FC<IMainLayoutProps> = ({ children, t }) => {
   const navItems: string[] = [

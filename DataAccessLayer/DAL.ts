@@ -43,6 +43,11 @@ export const API = {
         likeItem: (id: number) => {
             return instance.post(`items/like`, {id})
                 .then(response => response)
+        },
+
+        watchItem: (id: number, date: Date) => {
+            return instance.post(`items/watch`, {id, date})
+                .then(response => response)
         }
     },
 
