@@ -61,5 +61,12 @@ export const API = {
             return instance.put(`auth/changeAvatar`, {avatar})
                 .then(response => response)
         },
+    },
+
+    itemAPI: {
+        getScene: () => {
+            return instance.get(`https://my.spline.design/untitledcopycopycopycopy-4e94300605d89e63c2e4b239504525c4/scene.splinecode`)
+                .then(response => response)
+        },
     }
 }

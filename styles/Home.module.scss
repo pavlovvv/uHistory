@@ -11,10 +11,8 @@
   color: #fff;
   font-family: 'Candara';
   font-size: 40px;
-}
 
-@media(max-width: 450px) {
-  .text {
-    font-size: 30px;
+  @media(max-width: 450px) {
+      font-size: 30px;
   }
 }

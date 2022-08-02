@@ -1,5 +1,5 @@
 import Link from "next/dist/client/link";
-import s from "../styles/error.module.css";
+import s from "../styles/error.module.scss";
 import { ILocale } from "../Typescript/interfaces/data";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import { useTranslation } from "react-i18next";

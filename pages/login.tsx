@@ -16,7 +16,7 @@ import { useRouter } from "next/dist/client/router";
 import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { auth, setSigning } from "../redux/signSlice";
-import s from "../styles/login.module.css";
+import s from "../styles/login.module.scss";
 import {
   IInputPasswordValues,
   ILocale,

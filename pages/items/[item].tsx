@@ -1,5 +1,5 @@
-import { NoSsr } from "@mui/base";
-import { useMediaQuery } from "@mui/material";
+import React from "react";
+import { useMediaQuery, CircularProgress } from "@mui/material";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import { useRouter } from "next/dist/client/router";
 import { useEffect, useState } from "react";
@@ -8,11 +8,14 @@ import SwipeableViews from "react-swipeable-views";
 import Bottom from "../../components/items/Bottom";
 import Header from "../../components/items/Header";
 import MainLayout from "../../components/layouts/MainLayout";
-import { watchItem } from "../../redux/signSlice";
-import s from "../../styles/item.module.css";
+import { getScene, watchItem } from "../../redux/signSlice";
+import s from "../../styles/item.module.scss";
 import { IItemGetServerSideProps } from "../../Typescript/interfaces/data";
 import { useAppDispatch } from "../../Typescript/redux-hooks";
 import { IItemProps } from "./../../Typescript/interfaces/data";
+import Spline from '@splinetool/react-spline';
+import { useRef } from "react";
+
 
 export async function getServerSideProps({
   params,
@@ -65,7 +68,7 @@ const Item: React.FC<IItemProps> = ({
   categoryItems,
 }) => {
   const router = useRouter();
-  const dispatch = useAppDispatch();
+  const dispatch = useAppDispatch()
 
   useEffect(() => {
     if (!item.id) {
@@ -73,12 +76,22 @@ const Item: React.FC<IItemProps> = ({
     }
   }, [item]);
 
+  useEffect(() => {
+    dispatch(watchItem({ id: item.id }));
+  }, []);
+
   const st = useTranslation("settings").t;
   const { t } = useTranslation("item");
 
   const [activeMainStep, setActiveMainStep] = useState<number>(0);
+  const [isLoaded, setLoaded] = useState<boolean>(false)
+  const loadingProgress = useRef<number>(0)
+  const loadingRef = useRef<HTMLElement>()
 
   const handleMainStepChange = (step: number): void => {
+    if (step === 0) {
+      loadingProgress.current = 1
+    }
     setActiveMainStep(step);
   };
 
@@ -86,21 +99,30 @@ const Item: React.FC<IItemProps> = ({
 
   const SplineObj1: React.FC = () => {
     return (
-      <NoSsr>
-        <iframe
-          src={item.spline}
-          className={s.item__frameSpline}
-          frameBorder="0"
-          width="600px"
-          height={!max500 ? "800px" : "600px"}
+      <>
+        {activeMainStep === 0 && <><Spline
+         scene={item.spline}
           onLoad={() => {
             console.log("loaded");
+            loadingProgress.current++
+            setLoaded(true)  
+            if (loadingRef.current && loadingProgress.current === 2) {
+              loadingRef.current.style.display = 'none'
+            } 
           }}
+          style={!isLoaded ? {display: 'none'} : max500 ? {maxWidth: '400px', maxHeight: '400px', marginTop: '-35px'} : 
+          {maxWidth: '700px', maxHeight: '700px', marginTop: '-35px'}}
           onError={() => {
             console.log("error");
           }}
         />
-      </NoSsr>
+        <CircularProgress
+        size={80}
+        sx={{display: "block", margin: "auto", color: "#fff"}}
+        ref={loadingRef}
+      />
+        </>}
+  </>
     );
   };
 
@@ -147,10 +169,6 @@ const Item: React.FC<IItemProps> = ({
     [<ImageObj3 />],
     [<ImageObj4 />],
   ];
-
-  useEffect(() => {
-    dispatch(watchItem({ id: item.id }));
-  }, []);
 
   return (
     <>

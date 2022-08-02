@@ -27,6 +27,10 @@
     align-items: center;
     position: relative;
     padding: 0 10px;
+
+    @media (max-width: 500px) {
+        padding: 0 3px;
+    }
 }
 
 .right__navItem {
@@ -34,29 +38,26 @@
     padding: 0 10px;
     transition: 0.4s;
     -webkit-transition: 0.4s;
-}
 
-.right__navItem:hover {
-    background: rgba(188, 217, 255, 0.2)
-}
-
-
-.right__navItemInner::after {
-    content: '';
-    position: absolute;
-    bottom: 0;
-    width: 150px;
-    right: -30px; 
-    height: 1px;
-    background-color: rgb(128,128,128, 0.3);
-}
-
-@media (max-width: 500px) {
-
-    .right__icon, .right__navItem {
-        padding: 0 3px;
+    &:hover {
+        background: rgba(188, 217, 255, 0.2)
     }
 
+    @media (max-width: 500px) {
+        padding: 0 3px;
+    }
+}
+
+.right__navItemInner {
+    &::after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        width: 150px;
+        right: -30px;
+        height: 1px;
+        background-color: rgb(128, 128, 128, 0.3);
+    }
 }
 
 .right__nav {
@@ -79,7 +80,7 @@
 
 .popover__item {
     padding: 10px 0;
-    border-bottom: 1px rgb(128,128,128, 0.3) solid;
+    border-bottom: 1px rgb(128, 128, 128, 0.3) solid;
 }
 
 .popoverContainer {
@@ -87,11 +88,14 @@
     padding-right: 40px;
 }
 
-.popover__topInner, .popover__bottomText1 {
+.popover__topInner,
+.popover__bottomText1 {
     text-align: center;
 }
 
-.popover__topTitle, .popover__center1Text, .popover__center2Text {
+.popover__topTitle,
+.popover__center1Text,
+.popover__center2Text {
     font-family: 'Candara';
     font-size: 19px;
     text-transform: uppercase;
@@ -133,15 +137,19 @@
     width: 128px;
 }
 
-.popover__center1Inner, .popover__center2Inner {
+@mixin popover__centerElInner($gap) {
     display: flex;
     flex-direction: row;
-    column-gap: 10px;
+    column-gap: $gap;
     align-items: center;
 }
 
+.popover__center1Inner {
+    @include popover__centerElInner(10px)
+}
+
 .popover__center2Inner {
-    column-gap: 25px;
+    @include popover__centerElInner(25px)
 }
 
 .popover__center2Languages {
@@ -167,12 +175,12 @@
     cursor: pointer;
 }
 
-.preloader{
+.preloader {
     width: 100%;
     height: 100vh;
     background-image: url('../public/images/bgMain.png');
     background-repeat: no-repeat;
-    background-size:cover;
+    background-size: cover;
     overflow: hidden;
 }
 

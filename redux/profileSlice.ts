@@ -1,6 +1,6 @@
 import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
 import { AppDispatch } from "./store";
-import { API } from "../DataAccessLayer/DAL";
+import { API } from "../other/DataAccessLayer";
 import { getOwnInfo } from "./signSlice";
 
 export interface IUpdateInfo {

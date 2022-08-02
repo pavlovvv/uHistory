@@ -11,13 +11,13 @@ import setHeaderLeftBackground from "../../other/setHeaderLeftBackground";
 import setHeaderRightBackground from "../../other/setHeaderRightBackground";
 import setRarityColor from "../../other/setRarityColor";
 import openSeaIcon from "../../public/images/opensea.png";
-import s from "../../styles/item.module.css";
+import { likeItem } from "../../redux/signSlice";
+import s from "../../styles/item.module.scss";
+import { useAppDispatch, useAppSelector } from "../../Typescript/redux-hooks";
 import {
   IHeaderRightElProps,
-  IItemHeaderProps,
+  IItemHeaderProps
 } from "./../../Typescript/interfaces/data";
-import { likeItem } from "../../redux/signSlice";
-import { useAppSelector, useAppDispatch } from "../../Typescript/redux-hooks";
 
 const Header: React.FC<IItemHeaderProps> = ({
   item,

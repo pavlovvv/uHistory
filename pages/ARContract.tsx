@@ -11,7 +11,7 @@ import dollarIcon from "../public/images/dollar.svg";
 import ethereumIcon from "../public/images/ethereum.svg";
 import hryvniaIcon from "../public/images/hryvnia.svg";
 import openSeaIcon from "../public/images/opensea.png";
-import s from "../styles/item.module.css";
+import s from "../styles/item.module.scss";
 import { ILocale } from "../Typescript/interfaces/data";
 import { useAppSelector } from "../Typescript/redux-hooks";
 import { IARContractProps } from "./../Typescript/interfaces/data";

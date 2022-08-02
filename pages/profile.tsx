@@ -26,7 +26,7 @@ import avatar7 from "../public/images/avatar7.png";
 import avatar8 from "../public/images/avatar8.png";
 import avatar9 from "../public/images/avatar9.png";
 import { changeAvatar, updateInfo } from "../redux/profileSlice";
-import s from "../styles/profile.module.css";
+import s from "../styles/profile.module.scss";
 import {
   IInputProfileValues,
   ILocale,

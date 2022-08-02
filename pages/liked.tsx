@@ -9,8 +9,8 @@ import dollarIcon from "../public/images/dollar.svg";
 import ethereumIcon from "../public/images/ethereum.svg";
 import hryvniaIcon from "../public/images/hryvnia.svg";
 import { likeItem } from "../redux/signSlice";
-import s from "../styles/liked.module.css";
-import s2 from "../styles/main.module.css";
+import s from "../styles/liked.module.scss";
+import s2 from "../styles/main.module.scss";
 import { IItem, ILikedProps, ILocale } from "../Typescript/interfaces/data";
 import { useAppDispatch, useAppSelector } from "../Typescript/redux-hooks";
 

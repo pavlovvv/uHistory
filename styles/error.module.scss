@@ -1,9 +1,9 @@
-.errorPage{
+.errorPage {
     width: 100%;
     height: 100vh;
     background-image: url('../public/images/bgMain.png');
     background-repeat: no-repeat;
-    background-size:cover;
+    background-size: cover;
     overflow: hidden;
 }
 
@@ -19,6 +19,14 @@
     font-size: 50px;
     height: 100%;
     text-align: center;
+
+    @media (max-width: 950px) {
+        font-size: 30px;
+    }
+
+    @media (max-width: 550px) {
+        font-size: 20px;
+    }
 }
 
 .errorPage__button {
@@ -29,24 +37,12 @@
     padding: 15px;
     border: 1px #fff solid;
     border-radius: 10px;
-}
 
-@media (max-width: 950px) {
-    .errorPage__text {
-        font-size: 30px;
-    }
-
-    .errorPage__button {
-        font-size: 20px;
-    }
-}
-
-@media (max-width: 550px) {
-    .errorPage__text {
+    @media (max-width: 950px) {
         font-size: 20px;
     }
 
-    .errorPage__button {
+    @media (max-width: 550px) {
         font-size: 17px;
     }
 }

@@ -8,7 +8,7 @@ import uHistoryIcon from "../../public/images/logo_blue.png";
 import UAicon from "../../public/images/UAIcon.png";
 import USicon from "../../public/images/USIcon.png";
 import { getOwnInfo, logOut, updateCurrency } from "../../redux/signSlice";
-import s from "../../styles/mainlayout.module.css";
+import s from "../../styles/mainlayout.module.scss";
 import { IMainLayoutProps } from "../../Typescript/interfaces/data";
 import { useAppDispatch, useAppSelector } from "../../Typescript/redux-hooks";
 

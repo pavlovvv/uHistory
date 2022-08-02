@@ -1,4 +1,4 @@
-import s from "../../styles/item.module.css";
+import s from "../../styles/item.module.scss";
 import { IHeaderDescriptionProps } from "../../Typescript/interfaces/data";
 
 const HeaderDescription: React.FC<IHeaderDescriptionProps> = ({

@@ -16,7 +16,7 @@ import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import InitialLayout from "../components/layouts/InitialLayout";
 import { setSigning, signUp } from "../redux/signSlice";
-import s from "../styles/signup.module.css";
+import s from "../styles/signup.module.scss";
 import {
   IInputPasswordValues,
   ILocale,

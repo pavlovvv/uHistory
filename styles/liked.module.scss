@@ -8,14 +8,26 @@
 
 .container {
     margin: 30px 50px;
+
+    @media (max-width: 850px) {
+        margin: 30px 5px;
+    }
 }
 
 .liked__title {
     font-size: 40px;
+
+    @media (max-width: 550px) {
+        padding-left: 30px;
+    }
 }
 
 .liked__mainTopTitle {
     font-size: 35px;
+
+    @media (max-width: 550px) {
+        padding-left: 30px;
+    }
 }
 
 .liked__main {
@@ -23,7 +35,7 @@
     height: 100%;
     backdrop-filter: blur(15px);
     -webkit-backdrop-filter: blur(15px);
-    background-color: rgb(255,255,255, 0.05);
+    background-color: rgb(255, 255, 255, 0.05);
     margin-top: 40px;
     border: 1px #fff solid;
     border-radius: 10px;
@@ -35,6 +47,16 @@
 
 .liked__mainContainer {
     padding: 20px 100px;
+
+    @media (max-width: 850px) {
+        padding: 20px 15px;
+    }
+
+    @media (max-width: 550px) {
+        padding: 50px 15px;
+        padding-left: 4px;
+        padding-right: 4px;
+    }
 }
 
 .liked__mainItemsInner {
@@ -43,44 +65,19 @@
     flex-wrap: wrap;
     column-gap: 10px;
     row-gap: 30px;
+
+    @media (max-width: 550px) {
+        padding: 50px 15px;
+    }
+
+    @media (max-width: 550px) {
+        row-gap: 35px;
+        column-gap: 5px;
+    }
 }
 
 .liked__mainItemsNotLiked {
     font-size: 20px;
     text-align: center;
     padding: 20px;
-}
-
-@media (max-width: 850px) {
-    .container {
-        margin: 30px 5px;
-    }
-
-    .liked__mainContainer {
-        padding: 20px 15px;
-    }
-}
-
-@media (max-width: 550px) {
-    .liked__mainContainer {
-        padding: 50px 15px;
-    }
-
-    .liked__mainItemsInner {
-        row-gap: 35px;
-        column-gap: 5px;
-    }
-
-    .liked__title {
-        font-size: 35px;
-    }
-
-    .liked__mainTopTitle {
-       padding-left: 30px;
-    }
-
-    .liked__mainContainer {
-        padding-left: 4px;
-        padding-right: 4px;
-    }
 }

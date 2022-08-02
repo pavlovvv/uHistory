@@ -6,11 +6,14 @@
     "start": "next start",
     "unlock": "Set-ExecutionPolicy RemoteSigned -Scope Process"
   },
+  "//comments": "I started to use next 11 because Amplify CLI didn't support next 12. Now I'm using ECR, ECS, EC2 and CloudFront. It works fine with next 12",
   "dependencies": {
     "@emotion/react": "^11.9.3",
     "@emotion/styled": "^11.9.3",
     "@mui/material": "^5.8.7",
     "@reduxjs/toolkit": "^1.8.3",
+    "@splinetool/react-spline": "^2.2.1",
+    "@splinetool/runtime": "^0.9.82",
     "axios": "^0.27.2",
     "bootstrap-icons": "^1.8.3",
     "firebase": "^9.9.0",
@@ -24,7 +27,8 @@
     "react-redux": "^8.0.2",
     "react-swipeable-views": "^0.14.0",
     "react-swipeable-views-utils": "^0.14.0",
-    "redux": "^4.2.0"
+    "redux": "^4.2.0",
+    "sass": "^1.54.0"
   },
   "devDependencies": {
     "@types/node": "^18.0.0",

@@ -4,7 +4,7 @@ import {
   getAuth,
   signInWithEmailAndPassword
 } from "firebase/auth";
-import { API } from "../DataAccessLayer/DAL";
+import { API } from "../other/DataAccessLayer";
 import { IWatchedArr } from "./../Typescript/interfaces/data";
 import { AppDispatch } from "./store";
 
@@ -169,6 +169,25 @@ export const watchItem = createAsyncThunk<
 
   dispatch(getOwnInfo())
 });
+
+export interface IWatchI2tem {
+  link: string
+}
+
+export const getScene = createAsyncThunk<
+  void,
+  IWatchI2tem,
+  { dispatch: AppDispatch }
+>("sign/getScene", async function ({}, { dispatch }) {
+    debugger
+    console.log(1)
+  const response = await API.itemAPI.getScene();
+
+  console.log(response)
+
+});
+
+
 
 interface ISetUser {
   id: number;

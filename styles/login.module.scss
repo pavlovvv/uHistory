@@ -1,0 +1,189 @@
+$mainColor: #bcd9ff;
+
+.login {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    column-gap: 450px;
+    row-gap: 150px;
+    overflow: hidden;
+
+    @media(max-width: 1600px) {
+        column-gap: 200px;
+    }
+
+    @media(max-width: 1100px) {
+        flex-direction: column;
+    }
+
+    @media (max-width: 500px) {
+        row-gap: 0px;
+        max-height: 1000px;
+    }
+}
+
+.login__loginPanel {
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-end;
+
+    @media(max-width: 1100px) {
+        width: 100%;
+        justify-content: center;
+        align-items: center;
+    }
+}
+
+.container {
+    padding: 193px 210px;
+    min-height: 80vh;
+    margin: 29px 20px;
+    border-radius: 10px;
+    background-color: rgba(255, 255, 255, 0.069);
+
+    @supports ((-webkit-backdrop-filter: none) or (backdrop-filter: none)) {
+        backdrop-filter: blur(80px);
+        -webkit-backdrop-filter: blur(80px);
+    }
+
+    @supports not ((-webkit-backdrop-filter: none) or (backdrop-filter: none)) {
+        background-color: rgba(188, 217, 255, 0.11)
+    }
+
+    @media(max-width: 1600px) {
+        padding: 200px 80px;
+    }
+
+    @media(max-width: 1100px) {
+        padding: 100px 80px;
+        min-height: auto;
+    }
+
+    @media (max-width: 500px) {
+        padding: 60px 25px;
+    }
+}
+
+.loginPanel__inner {
+    min-width: 430px;
+
+    @media(max-width: 1100px) {
+        min-width: auto;
+        width: 60vw;
+    }
+
+    @media (max-width: 500px) {
+        width: 80vw;
+    }
+}
+
+@mixin loginUnderline($offset, $thickness) {
+    color: $mainColor;
+    font-family: 'Candara';
+    text-transform: uppercase;
+    text-decoration-line: underline;
+    text-decoration-thickness: $thickness;
+    text-underline-offset: $offset;
+}
+
+.loginPanel__title {
+    @include loginUnderline(5px, 1px);
+    font-size: 45px;
+    text-align: center;
+    font-weight: 300;
+
+    @media (max-width: 500px) {
+        font-size: 35px;
+    }
+}
+
+.login__newAccSpan {
+    @include loginUnderline(3px, 1%);
+    cursor: pointer;
+}
+
+
+.login__loginChar {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-right: 350px;
+    width: 600px;
+    height: 600px;
+
+    @media(max-width: 1100px) {
+        width: 100%;
+        padding-right: 0;
+    }
+}
+
+.login__form {
+    margin-top: 50px;
+}
+
+.login__formSection {
+    margin-top: 20px;
+}
+
+.login__formLabel {
+    color: #fff;
+    text-transform: uppercase;
+    font-family: 'Candara';
+    font-size: 25px;
+    display: flex;
+    margin-bottom: 10px;
+    align-items: center;
+    column-gap: 10px;
+    font-weight: 300;
+
+    @media (max-width: 500px) {
+        font-size: 17px;
+        margin-bottom: 6px;
+    }
+}
+
+.login__formSubmit {
+    margin-top: 30px;
+    color: $mainColor;
+    text-transform: uppercase;
+    font-size: 20px;
+    padding: 5px 35px;
+    border-radius: 10px;
+    border: 1px $mainColor solid;
+    cursor: pointer;
+    transition: 0.3s;
+    -webkit-transition: 0.3s;
+    display: flex;
+    align-items: center;
+
+    &:disabled {
+        border: 1px #73777B solid;
+        color: #73777B
+    }
+
+    &:hover {
+        background-color: rgba(188, 217, 255, 0.1)
+    }
+}
+
+.login__newAcc {
+    color: #fff;
+    margin-top: 30px;
+    font-family: 'Candara';
+    font-size: 18px;
+    text-transform: uppercase;
+    font-weight: 300;
+
+    @media (max-width: 500px) {
+        font-size: 15px;
+    }
+}
+
+.login__loginCharFrame {
+    position: absolute;
+    top: 25%;
+
+    @media(max-width: 1100px) {
+        top: -90px;
+    }
+}

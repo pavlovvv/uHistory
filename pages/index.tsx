@@ -10,7 +10,7 @@ import React, { useEffect, useRef } from "react";
 import InitialLayout from "../components/layouts/InitialLayout";
 import char from "../public/images/char.png";
 import { continueWithGoogle, setSigning } from "../redux/signSlice";
-import s from "../styles/index.module.css";
+import s from "../styles/index.module.scss";
 import { IGoogleUserData, ILocale } from "../Typescript/interfaces/data";
 import { useAppDispatch, useAppSelector } from "./../Typescript/redux-hooks";
 
@@ -203,7 +203,7 @@ const Main: React.FC = () => {
                 src={char.src}
                 width={!max1200 ? "883px" : "600px"}
                 height={!max1200 ? "704px" : "478px"}
-                alt="uHistory_character"
+                alt="uHistory character"
               />
             </div>
           </section>
